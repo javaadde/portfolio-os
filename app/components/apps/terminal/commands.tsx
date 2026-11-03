@@ -1,5 +1,5 @@
 import React from "react";
-import { formatMonth, yearsOfExperience } from "../../../lib/utils";
+import { formatMonth, formatDuration } from "../../../lib/utils";
 import { AppId } from "../../../lib/apps";
 import { PortfolioContent } from "../../../lib/content/schema";
 import { parseYearMonth } from "../../../lib/content/dates";
@@ -274,7 +274,7 @@ export const commands: Record<string, Command> = {
           </div>
           <div>
             <Accent>Uptime:</Accent>{" "}
-            {yearsOfExperience(parseYearMonth(profile.careerStart))}+ years of
+            {formatDuration(parseYearMonth(profile.careerStart))} of
             shipping
           </div>
           <div>

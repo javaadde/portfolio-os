@@ -3,7 +3,7 @@
 import React from "react";
 import { useContent } from "../../../context/content-context";
 import { parseYearMonth } from "../../../lib/content/dates";
-import { yearsOfExperience } from "../../../lib/utils";
+import { formatDuration } from "../../../lib/utils";
 import { useWindows } from "../../../context/window-context";
 import { useOpenTarget } from "../../../hooks/use-open-file";
 import Symbol from "../../symbol";
@@ -28,12 +28,12 @@ const About: React.FC = () => {
       symbol: "doc",
       onClick: () => openApp("preview"),
     },
-    ...(links.website
+    ...(links.github
       ? [
           {
-            label: "website",
+            label: "GitHub",
             symbol: "globe",
-            onClick: () => openTarget({ type: "url", url: links.website! }),
+            onClick: () => openTarget({ type: "url", url: links.github! }),
           },
         ]
       : []),
@@ -48,11 +48,10 @@ const About: React.FC = () => {
     { label: "work", value: current?.company ?? "Open to work" },
     {
       label: "experience",
-      value: `${yearsOfExperience(parseYearMonth(profile.careerStart))}+ years`,
+      value: formatDuration(parseYearMonth(profile.careerStart)),
     },
     { label: "focus", value: profile.focus.join(", ") },
     { label: "email", value: profile.email, href: `mailto:${profile.email}` },
-    { label: "homepage", href: links.website },
     { label: "GitHub", href: links.github },
     { label: "LinkedIn", href: links.linkedin },
   ]

@@ -21,7 +21,7 @@
       "Hono",
       "PostgreSQL"
     ],
-    "careerStart": "2023-10",
+    "careerStart": "2026-06",
     "email": "javade.work@gmail.com",
     "cv": "/CV.pdf",
     "links": {
@@ -35,7 +35,7 @@
       "id": "bytsolv",
       "company": "Bytsolv",
       "role": "Software Developer",
-      "start": "2024-06",
+      "start": "2026-06",
       "description": "Independently designed and built roughly 90% of Papr.work v1 — a financial paperwork tracking product for early-stage startups — taking a product concept from database schema and system architecture through to a shipped, live application with React 19, TanStack Router/Query, Tailwind CSS, shadcn/ui, Hono, Drizzle ORM, and PostgreSQL. Also contributed full-stack features to SmileOS, a SaaS platform for dental clinics used by 5,000+ practices across Australia, and remain.fit.",
       "projects": [
         {
@@ -84,8 +84,8 @@
       "id": "devxtra",
       "company": "Devxtra",
       "role": "Frontend & MERN Stack Developer",
-      "start": "2023-10",
-      "end": "2024-06",
+      "start": "2025-08",
+      "end": "2026-05",
       "description": "Completed a structured 8-month MERN stack apprenticeship and creative web engineering role with weekly mentor reviews under experienced industry engineers. Built and shipped Hayon, a full-stack social media planning and analytics dashboard, on AWS EC2/S3.",
       "projects": [
         {

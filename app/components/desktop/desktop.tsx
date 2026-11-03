@@ -45,7 +45,13 @@ const Desktop: React.FC = () => {
 
   const entries = useMemo(() => {
     const { cv, about } = buildFileEntries(content);
-    return [folderEntry("projects", content.profile.username), cv, about];
+    return [
+      folderEntry("experience", content.profile.username),
+      folderEntry("projects", content.profile.username),
+      folderEntry("contributions", content.profile.username),
+      cv,
+      about,
+    ];
   }, [content]);
 
   const visibleEntries = entries
@@ -102,6 +108,10 @@ const Desktop: React.FC = () => {
       onContextMenu={(e) =>
         contextMenu.open(e, [
           { label: "Get Info", onClick: () => openApp("about") },
+          {
+            label: "Open Experience",
+            onClick: () => openApp("finder", "experience"),
+          },
           {
             label: "Open Projects",
             onClick: () => openApp("finder", "projects"),

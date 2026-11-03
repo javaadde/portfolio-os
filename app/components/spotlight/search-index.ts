@@ -20,6 +20,7 @@ export const buildSearchIndex = ({
   profile,
   projects,
   experiences,
+  contributions,
 }: PortfolioContent): SearchResult[] => [
   ...apps.map<SearchResult>((app) => ({
     id: `app-${app.id}`,
@@ -37,6 +38,22 @@ export const buildSearchIndex = ({
     icon: PdfIcon,
     target: { type: "app", app: "preview" },
   },
+  {
+    id: "open-source",
+    title: "Open Source",
+    subtitle: "Contributions · Pull requests",
+    category: "Folders",
+    icon: FolderIcon,
+    target: { type: "app", app: "finder", payload: "contributions" },
+  },
+  ...contributions.map<SearchResult>((contribution) => ({
+    id: `contribution-${contribution.id}`,
+    title: contribution.title,
+    subtitle: `${contribution.repository} #${contribution.number} · ${contribution.status} · ${contribution.tags.join(", ")}`,
+    category: "Open Source",
+    icon: icons.notes,
+    target: { type: "app", app: "notes", payload: contribution.id },
+  })),
   ...projects.map<SearchResult>((project) => ({
     id: `project-${project.id}`,
     title: project.name,
@@ -47,14 +64,40 @@ export const buildSearchIndex = ({
     icon: FolderIcon,
     target: { type: "app", app: "finder", payload: `projects/${project.id}` },
   })),
-  ...experiences.map<SearchResult>((experience) => ({
-    id: `experience-${experience.id}`,
-    title: experience.company,
-    subtitle: experience.role,
-    category: "Experience",
-    icon: icons.notes,
-    target: { type: "app", app: "notes", payload: experience.id },
-  })),
+  ...experiences.flatMap<SearchResult>((experience) => [
+    {
+      id: `experience-${experience.id}`,
+      title: experience.company,
+      subtitle: experience.role,
+      category: "Experience",
+      icon: icons.notes,
+      target: { type: "app", app: "notes", payload: experience.id },
+    },
+    ...experience.projects.flatMap<SearchResult>((project) =>
+      typeof project === "string"
+        ? []
+        : [
+            {
+              id: `experience-product-${project.id}`,
+              title: project.name,
+              subtitle: [
+                experience.company,
+                project.type,
+                project.tags.join(", "),
+              ]
+                .filter(Boolean)
+                .join(" · "),
+              category: "Experience",
+              icon: FolderIcon,
+              target: {
+                type: "app",
+                app: "finder",
+                payload: `experience/${project.id}`,
+              },
+            },
+          ]
+    ),
+  ]),
   ...(
     [
       ["github", "GitHub", profile.links.github],

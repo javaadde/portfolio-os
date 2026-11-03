@@ -143,16 +143,16 @@ export function useMenus(): Menu[] {
       id: "go",
       label: "Go",
       entries: [
+        {
+          label: "Experience",
+          disabled: !experiences.length,
+          onClick: () => openApp("finder", "experience"),
+        },
         { label: "Projects", onClick: () => openApp("finder", "projects") },
         { label: "Documents", onClick: () => openApp("finder", "documents") },
         {
           label: "Applications",
           onClick: () => openApp("finder", "applications"),
-        },
-        {
-          label: "Experience",
-          disabled: !experiences.length,
-          onClick: () => openApp("notes", experiences[0]?.id),
         },
         "separator",
         ...[

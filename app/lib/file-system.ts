@@ -41,7 +41,9 @@ export const folderIds = [
   "desktop",
   "documents",
   "downloads",
+  "experience",
   "projects",
+  "contributions",
   "trash",
 ] as const;
 
@@ -55,7 +57,9 @@ const folderIcons: Record<FolderId, StaticImageData> = {
   desktop: DesktopFolderIcon,
   documents: DocumentsFolderIcon,
   downloads: DownloadsFolderIcon,
+  experience: FolderIcon,
   projects: FolderIcon,
+  contributions: FolderIcon,
   trash: FolderIcon,
 };
 
@@ -67,13 +71,27 @@ export const getTagFromLocation = (location: Location) =>
   location.startsWith("tag:") ? location.slice(4) : null;
 
 export const getFolderName = (id: FolderId, username: string) =>
-  id === "home" ? username : id[0].toUpperCase() + id.slice(1);
+  id === "contributions"
+    ? "Open Source"
+    : id === "home"
+      ? username
+      : id[0].toUpperCase() + id.slice(1);
 
 export const getLocationTitle = (location: Location, username: string) =>
   getTagFromLocation(location) ?? getFolderName(location as FolderId, username);
 
 export const getProjectTags = (content: PortfolioContent) =>
-  Array.from(new Set(content.projects.flatMap((project) => project.tags)));
+  Array.from(
+    new Set([
+      ...content.contributions.flatMap((contribution) => contribution.tags),
+      ...content.projects.flatMap((project) => project.tags),
+      ...content.experiences.flatMap((experience) =>
+        experience.projects.flatMap((project) =>
+          typeof project === "string" ? [] : project.tags
+        )
+      ),
+    ])
+  );
 
 export const folderEntry = (id: FolderId, username: string): FileEntry => ({
   id,
@@ -85,7 +103,12 @@ export const folderEntry = (id: FolderId, username: string): FileEntry => ({
   open: { type: "folder", location: id },
 });
 
-export const buildFileEntries = ({ profile, projects }: PortfolioContent) => {
+export const buildFileEntries = ({
+  profile,
+  projects,
+  experiences,
+  contributions,
+}: PortfolioContent) => {
   const cv: FileEntry = {
     id: "cv",
     name: "CV.pdf",
@@ -113,6 +136,49 @@ export const buildFileEntries = ({ profile, projects }: PortfolioContent) => {
     info: { subtitle: "Contact", description: profile.summary, tags: [] },
   };
 
+  const experienceEntries = experiences.flatMap<FileEntry>((experience) => [
+    {
+      id: experience.id,
+      name: experience.company,
+      kind: "Note",
+      icon: icons.notes,
+      canTrash: true,
+      canRename: true,
+      open: { type: "app", app: "notes", payload: experience.id },
+      info: {
+        subtitle: experience.role,
+        description: experience.description,
+        tags: [],
+        link: experience.link,
+      },
+    },
+    ...experience.projects.flatMap<FileEntry>((project) =>
+      typeof project === "string"
+        ? []
+        : [
+            {
+              id: project.id,
+              name: project.name,
+              kind: project.type ?? "Contributed Product",
+              icon: FolderIcon,
+              canTrash: true,
+              canRename: true,
+              open: project.link
+                ? { type: "url", url: project.link }
+                : { type: "none" },
+              info: {
+                subtitle: [experience.company, project.type]
+                  .filter(Boolean)
+                  .join(" · "),
+                description: project.description,
+                tags: project.tags,
+                link: project.link,
+              },
+            },
+          ]
+    ),
+  ]);
+
   const projectEntries = projects.map<FileEntry>((project) => ({
     id: project.id,
     name: project.name,
@@ -139,7 +205,28 @@ export const buildFileEntries = ({ profile, projects }: PortfolioContent) => {
     open: { type: "app", app: app.id },
   }));
 
-  return { cv, about, projects: projectEntries, applications };
+  return {
+    cv,
+    about,
+    experiences: experienceEntries,
+    projects: projectEntries,
+    contributions: contributions.map<FileEntry>((contribution) => ({
+      id: contribution.id,
+      name: `${contribution.repository} #${contribution.number}`,
+      kind: `${contribution.status} Pull Request`,
+      icon: icons.notes,
+      canTrash: true,
+      canRename: true,
+      open: { type: "app", app: "notes", payload: contribution.id },
+      info: {
+        subtitle: `${contribution.status} · ${contribution.title}`,
+        description: contribution.description,
+        tags: contribution.tags,
+        link: contribution.link,
+      },
+    })),
+    applications,
+  };
 };
 
 export type FileEntries = ReturnType<typeof buildFileEntries>;
@@ -158,7 +245,13 @@ export const listLocation = (
   const visible = (list: FileEntry[]) => list.filter((e) => isVisible(e.id));
   const tag = getTagFromLocation(location);
   if (tag)
-    return visible(entries.projects.filter((e) => e.info?.tags.includes(tag)));
+    return visible(
+      [
+        ...entries.experiences,
+        ...entries.projects,
+        ...entries.contributions,
+      ].filter((e) => e.info?.tags.includes(tag))
+    );
 
   switch (location as FolderId) {
     case "home":
@@ -168,28 +261,44 @@ export const listLocation = (
           "desktop",
           "documents",
           "downloads",
+          "experience",
           "projects",
+          "contributions",
         ] as const
       ).map((id) => folderEntry(id, username));
     case "recents":
-      return visible([entries.cv, ...entries.projects.slice(0, 4)]);
+      return visible([
+        entries.cv,
+        ...entries.experiences.slice(0, 2),
+        ...entries.projects.slice(0, 2),
+      ]);
     case "applications":
       return entries.applications;
     case "desktop":
       return visible([
         entries.about,
+        folderEntry("experience", username),
         folderEntry("projects", username),
+        folderEntry("contributions", username),
         entries.cv,
       ]);
     case "documents":
     case "downloads":
       return visible([entries.cv]);
+    case "experience":
+      return visible(entries.experiences);
+    case "contributions":
+      return visible(entries.contributions);
     case "projects":
       return visible(entries.projects);
     case "trash":
-      return [entries.cv, entries.about, ...entries.projects].filter((e) =>
-        trashed.includes(e.id)
-      );
+      return [
+        entries.cv,
+        entries.about,
+        ...entries.experiences,
+        ...entries.projects,
+        ...entries.contributions,
+      ].filter((e) => trashed.includes(e.id));
   }
 };
 

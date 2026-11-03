@@ -9,14 +9,22 @@ export interface Favorite {
 }
 
 export const getFavorites = (
-  { profile, projects }: PortfolioContent,
+  { profile, projects, experiences }: PortfolioContent,
   homepage: string
 ): Favorite[] => {
-  const projectTitles = new Map(
-    projects.flatMap((project) =>
-      project.link ? [[project.link, project.name] as const] : []
+  const experienceProjectLinks = experiences.flatMap((experience) =>
+    experience.projects.flatMap((project) =>
+      typeof project !== "string" && project.link
+        ? [[project.link, project.name] as const]
+        : []
     )
   );
+  const projectTitles = new Map([
+    ...experienceProjectLinks,
+    ...projects.flatMap((project) =>
+      project.link ? [[project.link, project.name] as const] : []
+    ),
+  ]);
   const urls = Array.from(
     new Set(
       [

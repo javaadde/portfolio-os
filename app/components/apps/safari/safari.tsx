@@ -54,11 +54,7 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
 
   const [state, dispatch] = useReducer(tabsReducer, null, () =>
     createTabs(
-      payload
-        ? toUrl(payload)
-        : isEmbeddedInAnotherPage()
-          ? START_PAGE
-          : homepage
+      payload ? toUrl(payload) : START_PAGE
     )
   );
   const [loaded, setLoaded] = useState<Set<string>>(() => new Set());

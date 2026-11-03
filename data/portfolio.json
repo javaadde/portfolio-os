@@ -1,244 +1,285 @@
 {
   "site": {
-    "title": "r0shish",
-    "description": "Portfolio Website"
+    "title": "javaadde",
+    "description": "Mohammed Javad E — Software Developer"
   },
   "profile": {
-    "name": "Roshish Shrestha",
-    "initials": "RS",
-    "username": "roshish",
-    "role": "Software Engineer",
-    "summary": "Software engineer specializing in developing innovative solutions across mobile, web and backend.",
+    "name": "Mohammed Javad E",
+    "initials": "MJ",
+    "username": "javaadde",
+    "role": "Software Developer",
+    "summary": "Software Developer based in Kochi, India — building fast, expressive web products end-to-end from database schema to polished UI.",
     "intro": [
-      "I mostly work with Flutter on mobile and Golang on the backend, with a bit of React on the web. Here you'll find notes on where I've worked, what I work with and a few things I'm proud of."
+      "I started programming in higher secondary school with HTML, CSS, and JavaScript, then built a foundation in C/C++ and core OOP concepts in Java before committing to software development.",
+      "That path led through a MERN stack apprenticeship at Devxtra into a software developer role at Bytsolv, where I've gone from learning fundamentals to independently shipping production applications. I enjoy building end-to-end — from database schema to polished UI — and I'm currently expanding into AI-assisted developer tooling and mobile development with React Native."
     ],
-    "focus": ["Flutter", "Golang", "React"],
-    "careerStart": "2022-02",
-    "email": "hello@rosh.sh",
+    "focus": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Hono",
+      "PostgreSQL"
+    ],
+    "careerStart": "2023-10",
+    "email": "javade.work@gmail.com",
     "cv": "/CV.pdf",
     "links": {
-      "website": "https://rosh.sh",
-      "github": "https://www.github.com/r0shish",
-      "linkedin": "https://www.linkedin.com/in/r0shish",
-      "repository": "https://github.com/R0shish/macos-styled-portfolio"
+      "website": "https://javade.in",
+      "github": "https://github.com/javaadde",
+      "linkedin": "https://linkedin.com/in/javaadde"
     }
   },
   "experiences": [
     {
-      "id": "tutero",
-      "company": "Tutero Pty Ltd",
-      "role": "Software Engineer",
-      "link": "https://www.tutero.com",
-      "start": "2025-10",
-      "description": "Worked across both frontend and backend to fix production issues and deliver complete features. Built both web and mobile applications maintaining separate projects for web and mobile while reusing core logic where possible and ensuring consistent behavior across platforms. Designed, developed, and integrated Golang-based microservices, focusing on clean architecture, performance, and reliability.",
-      "projects": ["Tutoring Platform", "Tutero Mobile App"]
-    },
-    {
-      "id": "swifttech",
-      "company": "Swift Technology | IME Group",
-      "role": "Software Engineer",
-      "link": "https://swifttech.com.np",
-      "start": "2024-09",
-      "end": "2025-10",
-      "description": "Migrated legacy Android (Java/Kotlin) and iOS (UIKit/SwiftUI) applications and native libraries to Flutter. Worked with sensitive financial data, ensuring accuracy, security, and compliance with industry standards. Worked on a multi-country remittance application with dynamic country-specific behavior, designing a scalable architecture across multiple layers to support country-based variations and future extensibility.",
-      "projects": ["IME Remit", "JME Remittance"]
-    },
-    {
-      "id": "slashplus",
-      "company": "Slash Plus",
-      "role": "Software Engineer",
-      "link": "http://slashplus.com.np",
-      "start": "2023-06",
-      "end": "2024-09",
-      "description": "Worked on revamping and enhancing existing legacy applications, introducing new features and increasing overall performance using Flutter. Worked with native languages (Kotlin & Swift) to create packages with native features like remote shell execution with root access, a custom printer library, iOS Object Capture API etc.",
+      "id": "bytsolv",
+      "company": "Bytsolv",
+      "role": "Software Developer",
+      "start": "2024-06",
+      "description": "Independently designed and built roughly 90% of Papr.work v1 — a financial paperwork tracking product for early-stage startups — taking a product concept from database schema and system architecture through to a shipped, live application with React 19, TanStack Router/Query, Tailwind CSS, shadcn/ui, Hono, Drizzle ORM, and PostgreSQL. Also contributed full-stack features to SmileOS, a SaaS platform for dental clinics used by 5,000+ practices across Australia, and remain.fit.",
       "projects": [
-        "Signage Plus",
-        "Digibuzz",
-        "Blue Bus Ticketing",
-        "GPS Sewa",
-        "Sajha Plus"
+        {
+          "id": "papr",
+          "name": "Papr",
+          "type": "Shipped Product",
+          "role": "Full-Stack Development",
+          "description": "Financial paperwork, tracked — ledger, invoices, expense tracking, and PDF storage for early-stage startups and small companies without an accountant. Built with React 19, TanStack Router/Query, Hono, Drizzle ORM, and PostgreSQL.",
+          "tags": [
+            "Web",
+            "React",
+            "Hono",
+            "PostgreSQL"
+          ],
+          "link": "https://papr.work/"
+        },
+        {
+          "id": "smileos",
+          "name": "SmileOS",
+          "type": "Contributed Product",
+          "role": "Frontend & Feature Engineering",
+          "description": "Complete growth operating system for dental clinics used by 5,000+ practices across Australia — automated patient communications, AI-driven enquiry actions, marketing pipelines, and practice analytics.",
+          "tags": [
+            "Web",
+            "Next.js",
+            "Hono",
+            "PostgreSQL"
+          ],
+          "link": "https://www.smileos.online/"
+        },
+        {
+          "id": "remain-fit",
+          "name": "remain.fit",
+          "type": "Contributed Product",
+          "role": "Frontend & Web Engineering",
+          "description": "Small, single-purpose tools for the hard part of fitness — fasting, weight, streaks, and hydration with one account and a quiet design language.",
+          "tags": [
+            "Web",
+            "Next.js"
+          ],
+          "link": "https://remain.fit/"
+        }
       ]
     },
     {
-      "id": "softechtonic",
-      "company": "Softechtonic",
-      "role": "Junior Flutter Developer",
-      "link": "https://softechtonic.net",
-      "start": "2022-02",
-      "end": "2023-06",
-      "description": "Specialized in the analysis, design, and development of mobile applications for schools. Identified the needs and requirements of educational institutions and created user-friendly and efficient apps to support teaching and learning. Worked through the full lifecycle of mobile app development, from concept to launch.",
-      "projects": []
+      "id": "devxtra",
+      "company": "Devxtra",
+      "role": "Frontend & MERN Stack Developer",
+      "start": "2023-10",
+      "end": "2024-06",
+      "description": "Completed a structured 8-month MERN stack apprenticeship and creative web engineering role with weekly mentor reviews under experienced industry engineers. Built and shipped Hayon, a full-stack social media planning and analytics dashboard, on AWS EC2/S3.",
+      "projects": [
+        {
+          "id": "hayon",
+          "name": "Hayon",
+          "type": "Shipped Product",
+          "role": "Full-Stack Development",
+          "description": "Built a full-stack social media planning and analytics dashboard with AI caption suggestions, analytics visualizations, and cloud deployment.",
+          "tags": [
+            "Web",
+            "Next.js",
+            "Node.js",
+            "MongoDB"
+          ],
+          "link": "https://hayon.site",
+          "github": "https://github.com/javaadde/hayon"
+        }
+      ]
     }
   ],
   "projects": [
     {
-      "id": "tutero-platform",
-      "name": "Tutoring Platform",
-      "company": "Tutero",
-      "description": "Web platform for Tutero's tutoring service, backed by Golang microservices.",
-      "tags": ["Web", "Golang"],
-      "link": "https://app.tutero.com"
+      "id": "haruru",
+      "name": "Haruru",
+      "company": "Rust Desktop App · Disk Usage & Cleanup",
+      "description": "Explore disk usage through interactive sunburst charts and treemaps. Built in Rust with egui, Haruru combines duplicate-file detection, remote SSH scanning, and an AI storage advisor in a cross-platform desktop app.",
+      "tags": [
+        "Desktop",
+        "Rust",
+        "egui",
+        "Data Visualization"
+      ],
+      "link": "https://github.com/javaadde/haruru"
     },
     {
-      "id": "tutero-mobile",
-      "name": "Tutero Mobile App",
-      "company": "Tutero",
-      "description": "Mobile app for Tutero sharing core logic with the web platform for consistent behavior across platforms.",
-      "tags": ["Mobile", "iOS", "Android"],
-      "link": "https://apps.apple.com/us/app/tutero/id1633367352"
+      "id": "evolf",
+      "name": "Evolf",
+      "company": "Hardware Tooling · Linux Mouse Controls",
+      "description": "Control Evofox Phantom mouse lighting from Linux with a React-powered terminal interface and a Python HID backend. Includes automatic device detection and scriptable CLI commands for hardware whose configuration utility is Windows-only.",
+      "tags": [
+        "CLI",
+        "React",
+        "Python",
+        "Hardware"
+      ],
+      "link": "https://github.com/javaadde/evolf"
     },
     {
-      "id": "ime-remit",
-      "name": "IME Remit",
-      "company": "Swift Technology",
-      "description": "Multi-country remittance application with dynamic country-specific behavior, migrated from native Android and iOS to Flutter.",
-      "tags": ["Flutter", "Fintech"]
+      "id": "zaiko",
+      "name": "Zaiko",
+      "company": "Mobile App · Retail Inventory & Sales",
+      "description": "Manage a mobile shop from stock intake to sale: track individual devices by IMEI, capture product photos, verify sales, and review inventory and profit insights. Built with React Native, Expo, and Firebase, with company workspaces and archived-stock recovery.",
+      "tags": [
+        "Mobile",
+        "React Native",
+        "Expo",
+        "Firebase"
+      ],
+      "link": "https://github.com/javaadde/zaiko"
     },
     {
-      "id": "jme-remittance",
-      "name": "JME Remittance",
-      "company": "Swift Technology",
-      "description": "Remittance app handling sensitive financial data with a focus on accuracy, security and compliance.",
-      "tags": ["Flutter", "Fintech"],
-      "link": "https://play.google.com/store/apps/details?id=com.remit.jmecustomer"
-    },
+      "id": "hayon",
+      "name": "Hayon",
+      "company": "Full-Stack Social Media Dashboard",
+      "description": "All-in-one social media planning and analytics dashboard built with Next.js (App Router), shadcn/ui, Recharts, Google Gemini AI caption suggestions, RabbitMQ, and AWS (EC2/S3).",
+      "tags": [
+        "Web",
+        "Next.js",
+        "Node.js",
+        "MongoDB"
+      ],
+      "link": "https://hayon.site",
+      "github": "https://github.com/javaadde/hayon"
+    }
+  ],
+  "contributions": [
     {
-      "id": "signage-plus",
-      "name": "Signage Plus",
-      "company": "Slash Plus",
-      "description": "Revamped legacy application with new features and native Kotlin packages.",
-      "tags": ["Flutter", "Kotlin"],
-      "link": "https://signageplus.net"
-    },
-    {
-      "id": "digibuzz",
-      "name": "Digibuzz",
-      "company": "Slash Plus",
-      "description": "Revamped legacy application with new features in Flutter.",
-      "tags": ["Flutter"],
-      "link": "https://digibuzznp.com"
-    },
-    {
-      "id": "blue-bus",
-      "name": "Blue Bus Ticketing",
-      "company": "Slash Plus",
-      "description": "Bus ticketing application built with Flutter at Slash Plus.",
-      "tags": ["Flutter"],
-      "link": "https://play.google.com/store/apps/details?id=com.slashplus.bluebusticketing"
-    },
-    {
-      "id": "gps-sewa",
-      "name": "GPS Sewa",
-      "company": "Slash Plus",
-      "description": "Mobile application built with Flutter at Slash Plus.",
-      "tags": ["Flutter"],
-      "link": "https://play.google.com/store/apps/details?id=com.slashplus.gpssewa"
-    },
-    {
-      "id": "sajha-plus",
-      "name": "Sajha Plus",
-      "company": "Slash Plus",
-      "description": "Mobile application built with Flutter at Slash Plus.",
-      "tags": ["Flutter"],
-      "link": "https://play.google.com/store/apps/details?id=com.slashplus.sajhaplus.sajha_plus"
-    },
-    {
-      "id": "skylearn",
-      "name": "SkyLearn",
-      "company": "NASA Space Apps",
-      "description": "Built in 36 hours for the challenge \"Eclipses: Perspective is Everything\". Global Nominee.",
-      "tags": ["Flutter", "Hackathon"],
-      "link": "https://www.spaceappschallenge.org/2023/find-a-team/herald-rangers/?tab=project"
-    },
-    {
-      "id": "trashfree",
-      "name": "TrashFree",
-      "company": "Ace Ignite Hackathon",
-      "description": "Waste management app built in 36 hours. 2nd Runner Up at Ace Ignite Hackathon.",
-      "tags": ["Flutter", "Hackathon"],
-      "link": "https://devfolio.co/projects/trashfree-0525"
-    },
-    {
-      "id": "portfolio",
-      "name": "macOS Portfolio",
-      "company": "Personal",
-      "description": "This website. A macOS styled portfolio built with Next.js.",
-      "tags": ["Next.js", "Framer Motion"],
-      "link": "https://github.com/R0shish/macos-styled-portfolio"
+      "id": "rust-cc-rs-1833",
+      "repository": "rust-lang/cc-rs",
+      "title": "Better CI for cross-compiling",
+      "number": 1833,
+      "status": "Merged",
+      "description": "Expanded CI coverage for cross-compilation jobs that cannot run target binaries. These jobs now compile all Cargo test targets instead of only the default test set, catching more target-specific build failures during CI.",
+      "tags": [
+        "Rust",
+        "CI",
+        "Cross-compilation"
+      ],
+      "link": "https://github.com/rust-lang/cc-rs/pull/1833"
     }
   ],
   "awards": [
     {
-      "title": "WLV Exchange Fellowship 2024",
-      "event": "Herald College Kathmandu",
-      "date": "Feb 2024",
-      "description": "A funded academic trip to the University of Wolverhampton, United Kingdom. One of the 9 students selected among students from Final Year BIT, BIBM and Masters of Herald College Kathmandu.",
-      "link": "https://heraldcollege.edu.np/wlv-exchange-fellowship-2024-a-week-of-academic-adventure"
+      "title": "Solo-Shipped Papr.work v1",
+      "event": "Bytsolv",
+      "date": "2026",
+      "description": "Independently designed the database schema and system architecture and shipped ~90% of Papr.work v1 to production with 24+ pull requests merged in roughly a month as the sole engineer on the build.",
+      "link": "https://papr.work/"
     },
     {
-      "title": "Global Nominees",
-      "event": "NASA International Space Apps Challenge",
-      "date": "Oct 2023",
-      "description": "Developed a mobile application (frontend and backend) called \"SkyLearn\" on the challenge \"Eclipses: Perspective is Everything\" within a tight deadline of 36 hours.",
-      "link": "https://www.spaceappschallenge.org/2023/find-a-team/herald-rangers/?tab=project"
-    },
-    {
-      "title": "2nd Runner Up",
-      "event": "Ace Ignite Hackathon",
-      "date": "Nov 2022",
-      "description": "Developed a mobile application (frontend and backend) for waste management called \"TrashFree\" within a tight deadline of 36 hours.",
-      "link": "https://youtu.be/7h1ERHh1tk4"
+      "title": "MERN Stack Apprenticeship",
+      "event": "Devxtra",
+      "date": "2025 — 2026",
+      "description": "Completed an 8-month structured full-stack engineering apprenticeship with weekly mentor reviews, shipping Hayon on AWS EC2/S3.",
+      "link": "https://hayon.site"
     }
   ],
   "skills": {
-    "Languages": ["Dart", "Golang", "JavaScript", "Kotlin", "Swift"],
-    "Frameworks": [
-      "Flutter",
-      "ReactJS",
-      "NodeJS",
+    "Frontend": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "TanStack Router/Query",
+      "GSAP",
       "Framer Motion",
-      "Socket.io"
+      "Vite"
     ],
-    "Databases": ["Firebase", "MongoDB", "PostgreSQL", "CockroachDB", "Neo4j"],
-    "Architecture": ["BLoC", "Riverpod", "Clean Architecture", "MVP"],
-    "Tools": ["CI/CD", "Kubectl", "Telepresence"]
+    "Backend": [
+      "Node.js",
+      "Hono",
+      "Express.js",
+      "REST APIs",
+      "RabbitMQ",
+      "System Design"
+    ],
+    "Databases & ORM": [
+      "PostgreSQL",
+      "Drizzle ORM",
+      "MongoDB",
+      "Redis",
+      "SQL"
+    ],
+    "DevOps & Mobile": [
+      "AWS (S3/EC2)",
+      "Docker",
+      "Linux",
+      "Nginx",
+      "CI/CD",
+      "Git/GitHub",
+      "React Native",
+      "Expo Go",
+      "Tauri"
+    ]
   },
   "system": {
-    "hostname": "portfolio",
+    "hostname": "javaadde",
     "defaultAppearance": "dark",
-    "defaultWallpaper": "synthwave",
+    "defaultWallpaper": "geometric-frosted",
     "wallpapers": [
       {
-        "id": "synthwave",
-        "name": "Synthwave",
-        "src": "/wallpapers/synthwave.jpg"
+        "id": "geometric",
+        "name": "Geometric",
+        "src": "/wallpapers/geometric.jpg"
       },
       {
-        "id": "mountains",
-        "name": "Mountains",
-        "src": "/wallpapers/mountains.jpg",
+        "id": "geometric-frosted",
+        "name": "Geometric Frosted",
+        "src": "/wallpapers/geometric-frosted.jpg"
+      },
+      {
+        "id": "green-dark",
+        "name": "Green Dark",
+        "src": "/wallpapers/green-dark.png"
+      },
+      {
+        "id": "green-light",
+        "name": "Green Light",
+        "src": "/wallpapers/green-light.png",
         "isLight": true
       },
       {
-        "id": "dusk",
-        "name": "Dusk",
-        "gradient": "linear-gradient(160deg, #2b1055 0%, #7597de 55%, #f6b2a8 100%)"
+        "id": "blue-dark",
+        "name": "Blue Dark",
+        "src": "/wallpapers/blue-dark.png"
       },
       {
-        "id": "ocean",
-        "name": "Ocean",
-        "gradient": "linear-gradient(200deg, #0f2027 0%, #203a43 45%, #2c7a8c 100%)"
-      },
-      {
-        "id": "sunrise",
-        "name": "Sunrise",
-        "gradient": "linear-gradient(180deg, #f9d5a7 0%, #f6a192 50%, #b06ab3 100%)",
+        "id": "blue-light",
+        "name": "Blue Light",
+        "src": "/wallpapers/blue-light.png",
         "isLight": true
       },
       {
-        "id": "graphite",
-        "name": "Graphite",
-        "gradient": "radial-gradient(circle at 30% 20%, #4b4b52 0%, #1c1c1f 70%)"
+        "id": "purple-dark",
+        "name": "Purple Dark",
+        "src": "/wallpapers/purple-dark.png"
+      },
+      {
+        "id": "purple-light",
+        "name": "Purple Light",
+        "src": "/wallpapers/purple-light.png",
+        "isLight": true
       }
     ],
     "welcome": {

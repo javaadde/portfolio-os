@@ -3,7 +3,7 @@ import { SEARCH_URL, canEmbed, getHost, toUrl } from "./browser";
 
 describe("toUrl", () => {
   it("adds https to bare domains", () => {
-    expect(toUrl("rosh.sh")).toBe("https://rosh.sh/");
+    expect(toUrl("example.com")).toBe("https://example.com/");
     expect(toUrl("en.wikipedia.org/wiki/Nepal")).toBe(
       "https://en.wikipedia.org/wiki/Nepal"
     );
@@ -30,11 +30,11 @@ describe("toUrl", () => {
 
 describe("hosts", () => {
   it("shows the host without www", () => {
-    expect(getHost("https://www.rosh.sh/about")).toBe("rosh.sh");
+    expect(getHost("https://www.example.com/about")).toBe("example.com");
   });
 
   it("knows which sites refuse to be embedded", () => {
-    expect(canEmbed("https://github.com/r0shish")).toBe(false);
+    expect(canEmbed("https://github.com/octocat")).toBe(false);
     expect(canEmbed("https://gist.github.com/x")).toBe(false);
     expect(canEmbed("https://en.wikipedia.org")).toBe(true);
     expect(canEmbed("https://notgithub.com")).toBe(true);

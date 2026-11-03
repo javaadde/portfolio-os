@@ -29,9 +29,17 @@ const openTargets: Record<
   { label: string; open: (context: CommandContext) => void }
 > = {
   finder: { label: "Finder", open: ({ openApp }) => openApp("finder") },
+  experience: {
+    label: "Experience",
+    open: ({ openApp }) => openApp("finder", "experience"),
+  },
   projects: {
     label: "Projects",
     open: ({ openApp }) => openApp("finder", "projects"),
+  },
+  contributions: {
+    label: "Open Source",
+    open: ({ openApp }) => openApp("finder", "contributions"),
   },
   notes: { label: "Notes", open: ({ openApp }) => openApp("notes") },
   safari: { label: "Safari", open: ({ openApp }) => openApp("safari") },
@@ -84,16 +92,53 @@ export const commands: Record<string, Command> = {
   experience: {
     description: "where I have worked",
     run: (_, { content: { experiences } }) => (
-      <div>
+      <div className="space-y-1.5">
         {experiences.map((experience) => (
           <div key={experience.id}>
-            <Accent>{experience.company}</Accent> - {experience.role}{" "}
-            <span className="text-neutral-500">
-              ({formatMonth(parseYearMonth(experience.start))} -{" "}
-              {formatMonth(parseYearMonth(experience.end))})
-            </span>
+            <div>
+              <Accent>{experience.company}</Accent> - {experience.role}{" "}
+              <span className="text-neutral-500">
+                ({formatMonth(parseYearMonth(experience.start))} -{" "}
+                {formatMonth(parseYearMonth(experience.end))})
+              </span>
+            </div>
+            {experience.projects.length > 0 && (
+              <div className="pl-3 text-neutral-400">
+                {experience.projects.map((project) =>
+                  typeof project === "string" ? (
+                    <div key={project}>• {project}</div>
+                  ) : (
+                    <div key={project.id}>
+                      • <Accent>{project.name}</Accent>
+                      {project.type && (
+                        <span className="text-neutral-500">
+                          {" "}
+                          [{project.type}]
+                        </span>
+                      )}
+                      {project.link && (
+                        <>
+                          {" "}
+                          -{" "}
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            className="underline text-neutral-400"
+                          >
+                            {project.link}
+                          </a>
+                        </>
+                      )}
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </div>
         ))}
+        <div className="mt-1 text-neutral-500">
+          Try `open experience` to browse them in Finder.
+        </div>
       </div>
     ),
   },
@@ -179,7 +224,9 @@ export const commands: Record<string, Command> = {
           <span key={file}>{file}</span>
         ))}
         <span>CV.pdf</span>
+        <span className="text-blue-400 font-bold">experience</span>
         <span className="text-blue-400 font-bold">projects</span>
+        <span className="text-blue-400 font-bold">contributions</span>
       </div>
     ),
   },
@@ -188,8 +235,13 @@ export const commands: Record<string, Command> = {
     run: ([file], context) => {
       if (!file) return "usage: cat <file>";
       if (file === "CV.pdf") return "cat: CV.pdf: binary file. Try `open cv`";
-      if (file.replace(/\/$/, "") === "projects")
-        return "cat: projects: Is a directory";
+      const clean = file.replace(/\/$/, "");
+      if (
+        clean === "projects" ||
+        clean === "experience" ||
+        clean === "contributions"
+      )
+        return `cat: ${clean}: Is a directory`;
       return (
         files[file]?.(context) ?? `cat: ${file}: No such file or directory`
       );

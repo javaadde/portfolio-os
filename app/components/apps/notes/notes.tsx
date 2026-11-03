@@ -112,6 +112,7 @@ const buildNotes = ({
   experiences,
   skills,
   awards,
+  contributions,
 }: PortfolioContent): Note[] => [
   {
     id: "hello",
@@ -171,11 +172,34 @@ const buildNotes = ({
         <p>{experience.description}</p>
         {experience.projects.length > 0 && (
           <>
-            <h3 className="font-semibold">Projects</h3>
-            <ul className="list-disc pl-5">
-              {experience.projects.map((project) => (
-                <li key={project}>{project}</li>
-              ))}
+            <h3 className="font-semibold">Shipped & Contributed Products</h3>
+            <ul className="list-disc pl-5 space-y-2">
+              {experience.projects.map((project) =>
+                typeof project === "string" ? (
+                  <li key={project}>{project}</li>
+                ) : (
+                  <li key={project.id}>
+                    <span className="font-semibold">
+                      {project.link ? (
+                        <ExternalLink href={project.link}>
+                          {project.name}
+                        </ExternalLink>
+                      ) : (
+                        project.name
+                      )}
+                    </span>
+                    {project.type && (
+                      <span className="text-neutral-500 dark:text-neutral-400">
+                        {" "}
+                        · {project.type}
+                      </span>
+                    )}
+                    <div className="text-13 text-black/75 dark:text-white/75 mt-0.5">
+                      {project.description}
+                    </div>
+                  </li>
+                )
+              )}
             </ul>
           </>
         )}
@@ -211,6 +235,35 @@ const buildNotes = ({
       </>
     ),
   },
+  ...contributions.map((contribution) => ({
+    id: contribution.id,
+    title: "Open Source",
+    date: "Contributions",
+    preview: `${contribution.repository} · ${contribution.status} · ${contribution.tags.join(", ")}`,
+    content: (
+      <>
+        <div className="flex flex-wrap items-center gap-2 text-13">
+          <span className="font-semibold">{contribution.repository}</span>
+          <span className="text-neutral-500 dark:text-neutral-400">
+            #{contribution.number}
+          </span>
+          <span className="rounded-full bg-black/5 dark:bg-white/10 px-2.5 py-0.5 font-medium">
+            {contribution.status}
+          </span>
+        </div>
+        <h3 className="font-semibold">{contribution.title}</h3>
+        <p>{contribution.description}</p>
+        <p className="text-13 text-neutral-500 dark:text-neutral-400">
+          {contribution.tags.join(" · ")}
+        </p>
+        <p>
+          <ExternalLink href={contribution.link}>
+            View pull request on GitHub ↗
+          </ExternalLink>
+        </p>
+      </>
+    ),
+  })),
   {
     id: "awards",
     title: "Honors & Awards",

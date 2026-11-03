@@ -6,6 +6,19 @@ const yearMonth = z
 
 const url = z.string().url();
 
+const experienceProjectSchema = z.union([
+  z.string(),
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    type: z.string().optional(),
+    role: z.string().optional(),
+    description: z.string(),
+    tags: z.array(z.string()).default([]),
+    link: url.optional(),
+  }),
+]);
+
 export const portfolioSchema = z.object({
   site: z.object({
     title: z.string(),
@@ -41,7 +54,7 @@ export const portfolioSchema = z.object({
         start: yearMonth,
         end: yearMonth.optional(),
         description: z.string(),
-        projects: z.array(z.string()).default([]),
+        projects: z.array(experienceProjectSchema).default([]),
       })
     )
     .default([]),
@@ -54,6 +67,20 @@ export const portfolioSchema = z.object({
         description: z.string(),
         tags: z.array(z.string()).default([]),
         link: url.optional(),
+      })
+    )
+    .default([]),
+  contributions: z
+    .array(
+      z.object({
+        id: z.string(),
+        repository: z.string(),
+        title: z.string(),
+        number: z.number().int().positive(),
+        status: z.enum(["Merged", "Open", "Closed"]),
+        description: z.string(),
+        tags: z.array(z.string()).default([]),
+        link: url,
       })
     )
     .default([]),
@@ -103,6 +130,7 @@ export const portfolioSchema = z.object({
 export type PortfolioContent = z.infer<typeof portfolioSchema>;
 export type Profile = PortfolioContent["profile"];
 export type Experience = PortfolioContent["experiences"][number];
+export type ExperienceProject = z.infer<typeof experienceProjectSchema>;
 export type Project = PortfolioContent["projects"][number];
 export type Award = PortfolioContent["awards"][number];
 export type Wallpaper = PortfolioContent["system"]["wallpapers"][number];

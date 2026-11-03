@@ -56,7 +56,9 @@ const getSidebarSections = (
       { id: "desktop", label: "Desktop", symbol: "menubar-dock-rectangle" },
       { id: "documents", label: "Documents", symbol: "doc" },
       { id: "downloads", label: "Downloads", symbol: "arrow-down-circle" },
+      { id: "experience", label: "Experience", symbol: "folder" },
       { id: "projects", label: "Projects", symbol: "folder" },
+      { id: "contributions", label: "Open Source", symbol: "folder" },
     ],
   },
   {

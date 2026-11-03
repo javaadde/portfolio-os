@@ -28,14 +28,6 @@ const FALLBACK_HOMEPAGE = "https://en.wikipedia.org";
 const getHomepage = ({ system, profile }: PortfolioContent) =>
   system.browser.homepage ?? profile.links.website ?? FALLBACK_HOMEPAGE;
 
-const isEmbeddedInAnotherPage = () => {
-  try {
-    return window.self !== window.top;
-  } catch {
-    return true;
-  }
-};
-
 const openInNewTab = (url: string) =>
   window.open(url, "_blank", "noopener,noreferrer");
 

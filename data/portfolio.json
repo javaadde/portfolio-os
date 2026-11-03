@@ -235,7 +235,7 @@
   },
   "system": {
     "hostname": "javaadde",
-    "defaultAppearance": "dark",
+    "defaultAppearance": "light",
     "defaultWallpaper": "geometric-frosted",
     "wallpapers": [
       {

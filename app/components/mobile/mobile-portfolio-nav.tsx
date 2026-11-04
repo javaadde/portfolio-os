@@ -41,7 +41,10 @@ export default function MobilePortfolioNav({ profile }: { profile: Profile }) {
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
             aria-controls={open ? "mobile-portfolio-menu" : undefined}
-            onClick={() => setOpen((value) => !value)}
+            onClick={(event) => {
+              event.stopPropagation();
+              setOpen((value) => !value);
+            }}
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -101,7 +104,10 @@ export default function MobilePortfolioNav({ profile }: { profile: Profile }) {
                       <Link
                         href={href}
                         aria-current={pathname === href ? "page" : undefined}
-                        onClick={() => setOpen(false)}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setOpen(false);
+                        }}
                       >
                         <span>{String(index + 1).padStart(2, "0")}</span>
                         <span>{label}</span>
@@ -110,38 +116,6 @@ export default function MobilePortfolioNav({ profile }: { profile: Profile }) {
                     </motion.div>
                   ))}
                 </nav>
-              </div>
-
-              <div className="mobile-menu-contact">
-                <div className="mobile-menu-email">
-                  <span>Let’s talk</span>
-                  <a href={`mailto:${profile.email}`}>{profile.email}</a>
-                </div>
-                <div className="mobile-menu-socials">
-                  <span>Socials</span>
-                  <div>
-                    {profile.links.github && (
-                      <a
-                        href={profile.links.github}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        aria-label="GitHub"
-                      >
-                        GH
-                      </a>
-                    )}
-                    {profile.links.linkedin && (
-                      <a
-                        href={profile.links.linkedin}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        aria-label="LinkedIn"
-                      >
-                        in
-                      </a>
-                    )}
-                  </div>
-                </div>
               </div>
             </motion.div>
           )}

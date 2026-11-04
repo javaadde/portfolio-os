@@ -4,7 +4,7 @@ import AddressBar from "./address-bar";
 import { Toolbar, ToolbarButton, ToolbarGroup } from "../../window/toolbar";
 import { cn } from "../../../lib/utils";
 
-interface SafariToolbarProps {
+export interface SafariToolbarProps {
   addressRef: RefObject<HTMLInputElement>;
   url: string;
   isLoading: boolean;
@@ -40,6 +40,7 @@ const SafariToolbar: React.FC<SafariToolbarProps> = ({
   onShowTabs,
 }) => (
   <Toolbar
+    className="safari-toolbar"
     hasControls
     leading={
       <>

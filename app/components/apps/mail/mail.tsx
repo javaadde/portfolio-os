@@ -43,13 +43,14 @@ const Mail: React.FC = () => {
       </MailField>
       <MailField label="Subject:">
         <input
+          aria-label="Subject"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           className="flex-grow bg-transparent outline-none"
-          autoFocus
         />
       </MailField>
       <textarea
+        aria-label="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(e) => {

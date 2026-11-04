@@ -36,8 +36,14 @@ const TabOverview: React.FC<TabOverviewProps> = ({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.18 }}
       onClick={(e) => e.target === e.currentTarget && onDismiss()}
-      className="absolute inset-0 z-20 overflow-y-auto p-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] content-start gap-6 bg-[#e8e6ea] dark:bg-[#211b20]"
+      className="safari-tab-overview absolute inset-0 z-20 overflow-y-auto p-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] content-start gap-6 bg-[#e8e6ea] dark:bg-[#211b20]"
     >
+      <header className="safari-tabs-header">
+        <span>
+          {tabs.length} {tabs.length === 1 ? "Tab" : "Tabs"}
+        </span>
+        <button onClick={onDismiss}>Done</button>
+      </header>
       {tabs.map((tab) => {
         const title = getTabTitle(tabUrl(tab));
         return (
@@ -56,7 +62,7 @@ const TabOverview: React.FC<TabOverviewProps> = ({
               <button
                 aria-label={`Close ${title}`}
                 onClick={() => onClose(tab.id)}
-                className="absolute -left-2 -top-2 w-6 h-6 rounded-full flex items-center justify-center bg-[#f4f2f5] dark:bg-[#3a3439] shadow opacity-0 group-hover:opacity-100"
+                className="absolute -left-2 -top-2 w-8 h-8 rounded-full flex items-center justify-center bg-[#f4f2f5] dark:bg-[#3a3439] shadow opacity-100 md:opacity-0 group-hover:opacity-100"
               >
                 <Symbol name="xmark" className="w-2.5 h-2.5" />
               </button>

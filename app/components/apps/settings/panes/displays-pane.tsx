@@ -11,7 +11,7 @@ const DisplaysPane: React.FC = () => {
   return (
     <SettingsGroup>
       <SettingsRow label="Brightness">
-        <div className="flex items-center gap-2 w-56">
+        <div className="flex items-center gap-2 w-56 max-w-full">
           <Symbol name="sun-max" className="w-3 h-3 opacity-50" />
           <input
             type="range"

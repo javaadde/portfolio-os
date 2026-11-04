@@ -1,5 +1,6 @@
 "use client";
 
+import { useMobile } from "../../../hooks/use-mobile";
 import React, { useEffect, useState } from "react";
 import { useContent } from "../../../context/content-context";
 import { cn } from "../../../lib/utils";
@@ -42,15 +43,80 @@ const isPane = (value?: string): value is Pane =>
 
 const Settings: React.FC<AppProps> = ({ payload, openedAt }) => {
   const { profile } = useContent();
+  const isMobile = useMobile();
+  const [showList, setShowList] = useState(!isPane(payload));
   const [pane, setPane] = useState<Pane>(
     isPane(payload) ? payload : "appearance"
   );
 
   useEffect(() => {
-    if (isPane(payload)) setPane(payload);
+    if (isPane(payload)) {
+      setPane(payload);
+      setShowList(false);
+    }
   }, [payload, openedAt]);
 
   const current = panes.find((p) => p.id === pane)!;
+
+  if (isMobile)
+    return (
+      <div className="mobile-settings h-full min-h-0 flex flex-col bg-[#f2f2f7] dark:bg-[#1c1c1e]">
+        {showList ? (
+          <div className="overflow-y-auto min-h-0 p-4">
+            <h1 className="mobile-large-title">Settings</h1>
+            <button
+              className="mobile-settings-profile"
+              onClick={() => {
+                setPane("about");
+                setShowList(false);
+              }}
+            >
+              <Avatar className="w-14 h-14 text-20" />
+              <span>
+                {profile.name}
+                <small>{profile.role}</small>
+              </span>
+              <span>›</span>
+            </button>
+            <nav className="mobile-settings-list" aria-label="Settings">
+              {panes.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setPane(item.id);
+                    setShowList(false);
+                  }}
+                >
+                  <span
+                    className={cn(
+                      "w-7 h-7 rounded-lg flex items-center justify-center text-white",
+                      item.color
+                    )}
+                  >
+                    <Symbol name={item.symbol} className="w-4 h-4" />
+                  </span>
+                  <span className="flex-grow text-left">{item.label}</span>
+                  <span>›</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        ) : (
+          <>
+            <header className="mobile-navigation">
+              <button onClick={() => setShowList(true)}>‹ Settings</button>
+              <strong>{current.label}</strong>
+            </header>
+            <div className="overflow-y-auto min-h-0 flex-grow p-4 space-y-4">
+              {pane === "appearance" && <AppearancePane />}
+              {pane === "wallpaper" && <WallpaperPane />}
+              {pane === "displays" && <DisplaysPane />}
+              {pane === "about" && <AboutPane />}
+            </div>
+          </>
+        )}
+      </div>
+    );
 
   return (
     <div className="flex h-full">

@@ -67,6 +67,12 @@ npm test             # unit tests (Vitest)
 npm run format       # format with Prettier
 ```
 
+### Test on your phone
+
+Run `npm run dev:mobile`, then connect your phone and computer to the same Wi-Fi. Open `http://<computer-LAN-IP>:3000` on your phone (use the port printed by Next.js if 3000 is busy). On Linux, `ip -4 route get 1.1.1.1` shows the address after `src`. Changes reload automatically while the server is running.
+
+Mobile has an iOS-style home screen with a local clock, seven apps, and a dock; Terminal stays on desktop. Tap the bottom Home indicator to return to the launcher. Mail opens your installed mail app, and Preview includes an external PDF link for mobile browsers.
+
 ### Architecture
 
 ```

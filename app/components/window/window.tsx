@@ -1,5 +1,6 @@
 "use client";
 
+import { useMobile } from "../../hooks/use-mobile";
 import Draggable from "react-draggable";
 import React, { memo, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -37,6 +38,7 @@ const Window: React.FC<WindowProps> = ({
   isHidden,
   children,
 }) => {
+  const isMobile = useMobile();
   const { closeApp, minimizeApp, focusApp, toggleMaximize, toggleFullscreen } =
     useWindows();
   const windowRef = useRef<HTMLDivElement>(null);
@@ -63,7 +65,7 @@ const Window: React.FC<WindowProps> = ({
     <Draggable
       axis="both"
       handle=".handle"
-      disabled={state.isFullscreen}
+      disabled={state.isFullscreen || isMobile}
       cancel="button, input, textarea, a, .window-controls"
       nodeRef={windowRef}
       position={frame.position}
@@ -84,8 +86,9 @@ const Window: React.FC<WindowProps> = ({
         ref={windowRef}
         role="dialog"
         aria-label={app.title}
+        data-mobile-visible={isFocused && !state.isMinimized}
         className={cn(
-          "absolute top-0 left-0",
+          "app-window absolute top-0 left-0",
           isTransitioning &&
             "transition-[width,height,transform] duration-[450ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
           state.isMinimized || isHidden
@@ -107,7 +110,7 @@ const Window: React.FC<WindowProps> = ({
       >
         <motion.div
           className={cn(
-            "h-full w-full bg-[#e8e6ea]/75 dark:bg-[#3a3039]/70 backdrop-blur-3xl backdrop-saturate-150 rounded-[26px] overflow-hidden flex flex-col relative text-13 text-black/85 dark:text-white/90 ring-[0.5px] ring-black/40 transition-shadow duration-200",
+            "app-window-surface h-full w-full bg-[#e8e6ea]/75 dark:bg-[#3a3039]/70 backdrop-blur-3xl backdrop-saturate-150 rounded-[26px] overflow-hidden flex flex-col relative text-13 text-black/85 dark:text-white/90 ring-[0.5px] ring-black/40 transition-shadow duration-200",
             "after:absolute after:inset-0 after:rounded-[inherit] after:pointer-events-none after:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.5)] dark:after:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.13)]",
             isFocused
               ? "shadow-[0_30px_80px_rgba(0,0,0,0.55),0_0_0_0.5px_rgba(0,0,0,0.6)]"
@@ -133,15 +136,17 @@ const Window: React.FC<WindowProps> = ({
           }}
           transition={{ type: "spring", stiffness: 420, damping: 38 }}
         >
-          <WindowControls
-            isFocused={isFocused}
-            isFullscreen={state.isFullscreen}
-            onFullscreen={(e) =>
-              e.altKey ? toggleMaximize(app.id) : toggleFullscreen(app.id)
-            }
-            onClose={() => closeApp(app.id)}
-            onMinimize={() => minimizeApp(app.id)}
-          />
+          {!isMobile && (
+            <WindowControls
+              isFocused={isFocused}
+              isFullscreen={state.isFullscreen}
+              onFullscreen={(e) =>
+                e.altKey ? toggleMaximize(app.id) : toggleFullscreen(app.id)
+              }
+              onClose={() => closeApp(app.id)}
+              onMinimize={() => minimizeApp(app.id)}
+            />
+          )}
           <div
             className="flex-grow min-h-0 relative"
             onDoubleClick={(e) => {
@@ -164,7 +169,7 @@ const Window: React.FC<WindowProps> = ({
             {blocksPointer && <div className="absolute inset-0" />}
           </div>
         </motion.div>
-        {!state.isMaximized && !state.isFullscreen && (
+        {!isMobile && !state.isMaximized && !state.isFullscreen && (
           <ResizeHandles onResizeStart={startResize} />
         )}
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMobile } from "../../../hooks/use-mobile";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AppProps } from "../../../lib/apps";
 import {
@@ -89,6 +90,7 @@ const parsePayload = (payload?: string) => {
 };
 
 const Finder: React.FC<AppProps> = ({ payload, openedAt }) => {
+  const isMobile = useMobile();
   const content = useContent();
   const files = useFiles();
   const initial = parsePayload(payload);
@@ -151,8 +153,10 @@ const Finder: React.FC<AppProps> = ({ payload, openedAt }) => {
   const items = listLocation(location, entries, username, files).map(
     (entry) => ({ ...entry, name: files.getName(entry.id, entry.name) })
   );
-  const visibleItems = items.filter((entry) =>
-    entry.name.toLowerCase().includes(search.toLowerCase())
+  const visibleItems = items.filter(
+    (entry) =>
+      (!isMobile || entry.id !== "terminal") &&
+      entry.name.toLowerCase().includes(search.toLowerCase())
   );
   const selected = items.find((entry) => entry.id === selectedId);
 

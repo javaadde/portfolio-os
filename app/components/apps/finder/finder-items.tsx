@@ -1,3 +1,4 @@
+import { useMobile } from "../../../hooks/use-mobile";
 import React, { forwardRef, useEffect, useRef } from "react";
 import AppIcon from "../../dock/app-icon";
 import RenameField from "./rename-field";
@@ -30,6 +31,7 @@ interface FinderItemsProps extends FinderItemHandlers {
 const FinderItems = forwardRef<HTMLDivElement, FinderItemsProps>(
   ({ entries, view, iconSize, selectedId, renamingId, ...handlers }, ref) => {
     const isFocused = useWindowFocus();
+    const isMobile = useMobile();
     const renameTimer = useRef<ReturnType<typeof setTimeout>>();
     const cancelPendingRename = () => clearTimeout(renameTimer.current);
 
@@ -47,7 +49,8 @@ const FinderItems = forwardRef<HTMLDivElement, FinderItemsProps>(
         handlers.onDragStart(e, entry),
       onClick: (e: React.MouseEvent) => {
         e.stopPropagation();
-        handlers.onSelect(entry);
+        if (isMobile) handlers.onOpen(entry);
+        else handlers.onSelect(entry);
       },
       onDoubleClick: () => {
         cancelPendingRename();
@@ -67,7 +70,7 @@ const FinderItems = forwardRef<HTMLDivElement, FinderItemsProps>(
         <div
           className={className}
           onClick={() => {
-            if (selectedId !== entry.id) return;
+            if (isMobile || selectedId !== entry.id) return;
             cancelPendingRename();
             renameTimer.current = setTimeout(
               () => handlers.onStartRename(entry),

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMobile } from "../../../hooks/use-mobile";
 import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { AppProps } from "../../../lib/apps";
 import { useContent } from "../../../context/content-context";
@@ -8,6 +9,7 @@ import { canGoBack, canGoForward } from "../../../lib/history";
 import { canEmbed, getHost, toUrl } from "../../../lib/browser";
 import { PortfolioContent } from "../../../lib/content/schema";
 import { useWindowFocus } from "../../window/window-focus";
+import MobileSafariToolbar from "./mobile-safari-toolbar";
 import SafariToolbar from "./safari-toolbar";
 import TabBar from "./tab-bar";
 import TabOverview from "./tab-overview";
@@ -35,6 +37,7 @@ const frameKey = (tab: BrowserTab) =>
   `${tab.id}-${tabUrl(tab)}-${tab.reloadKey}`;
 
 const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
+  const isMobile = useMobile();
   const content = useContent();
   const { notify } = useNotifications();
   const isFocused = useWindowFocus();
@@ -45,9 +48,7 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
   );
 
   const [state, dispatch] = useReducer(tabsReducer, null, () =>
-    createTabs(
-      payload ? toUrl(payload) : START_PAGE
-    )
+    createTabs(payload ? toUrl(payload) : START_PAGE)
   );
   const [loaded, setLoaded] = useState<Set<string>>(() => new Set());
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -64,6 +65,7 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
   const navigate = (input: string) => {
     const next = input === START_PAGE ? START_PAGE : toUrl(input);
     if (next) dispatch({ type: "navigate", url: next });
+    if (isMobile) setIsSidebarOpen(false);
   };
 
   const openTab = (input = START_PAGE) => {
@@ -82,8 +84,15 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
       await navigator.share({ url }).catch(() => undefined);
       return;
     }
-    await navigator.clipboard.writeText(url);
-    notify("Link Copied", url);
+    try {
+      if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(url);
+      notify("Link Copied", url);
+    } catch {
+      addressRef.current?.focus();
+      addressRef.current?.select();
+      notify("Copy Link", "Touch and hold the selected address to copy it.");
+    }
   };
 
   useEffect(() => {
@@ -112,9 +121,10 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFocused]);
 
+  const BrowserToolbar = isMobile ? MobileSafariToolbar : SafariToolbar;
   return (
-    <div className="h-full flex flex-col bg-white dark:bg-[#282025]">
-      <SafariToolbar
+    <div className="h-full min-h-0 flex flex-col bg-white dark:bg-[#282025]">
+      <BrowserToolbar
         addressRef={addressRef}
         url={isStartPage ? "" : url}
         isLoading={isLoading}
@@ -132,7 +142,7 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
         onShowTabs={() => setIsShowingTabs((isShowing) => !isShowing)}
       />
 
-      {state.tabs.length > 1 && (
+      {!isMobile && state.tabs.length > 1 && (
         <TabBar
           tabs={state.tabs}
           activeId={state.activeId}
@@ -150,7 +160,11 @@ const Safari: React.FC<AppProps> = ({ payload, openedAt }) => {
           />
         )}
 
-        <div className="relative flex-grow min-w-0">
+        <div
+          className={
+            isMobile && isSidebarOpen ? "hidden" : "relative flex-grow min-w-0"
+          }
+        >
           {isLoading && (
             <div
               aria-hidden

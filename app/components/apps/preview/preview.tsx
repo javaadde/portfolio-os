@@ -41,6 +41,14 @@ const Preview: React.FC = () => {
           </ToolbarGroup>
         }
       />
+      <a
+        href={profile.cv}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="md:hidden px-4 py-3 text-[#0a84ff] underline"
+      >
+        Open CV in your browser
+      </a>
       <iframe
         src={`${profile.cv}#view=FitH&toolbar=0&navpanes=0`}
         title="CV"

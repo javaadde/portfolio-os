@@ -27,7 +27,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   return (
     <div
       className={cn(
-        "handle relative h-[52px] shrink-0 flex items-center gap-2.5 px-2.5 transition-opacity duration-200",
+        "app-toolbar handle relative h-[52px] shrink-0 flex items-center gap-2.5 px-2.5 transition-opacity duration-200",
         hasControls && "pl-[92px]",
         !isFocused && "[&>*]:opacity-50",
         className

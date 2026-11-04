@@ -30,7 +30,7 @@ const AppearancePane: React.FC = () => {
   return (
     <SettingsGroup>
       <SettingsRow label="Appearance">
-        <div className="flex gap-4 py-1">
+        <div className="flex gap-3 py-1">
           {appearanceOptions.map((option) => (
             <button
               key={option.id}

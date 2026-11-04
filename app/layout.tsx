@@ -1,11 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import font from "next/font/local";
 import "./globals.css";
 import content from "../data/portfolio.json";
 
 export const metadata: Metadata = {
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Portfolio",
+    statusBarStyle: "black-translucent",
+  },
   title: content.site.title,
   description: content.site.description,
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 const sf = font({

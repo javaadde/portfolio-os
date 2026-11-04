@@ -42,6 +42,15 @@ describe("windowReducer", () => {
     expect(selectFocusedId(state)).toBe("finder");
   });
 
+  it("closes the current app and reveals the previous one", () => {
+    const state = run(open("finder"), open("notes"), {
+      type: "close",
+      id: "notes",
+    });
+    expect(state.windows.map((window) => window.id)).toEqual(["finder"]);
+    expect(selectFocusedId(state)).toBe("finder");
+  });
+
   it("restores a minimized window when focused", () => {
     const state = run(
       open("notes"),

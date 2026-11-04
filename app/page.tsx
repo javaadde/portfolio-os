@@ -1,3 +1,4 @@
+import MobileHome from "./components/mobile/mobile-home";
 import Providers from "./providers";
 import Desktop from "./components/desktop/desktop";
 import Dock from "./components/dock/dock";
@@ -13,15 +14,20 @@ import Launcher from "./components/launcher/launcher";
 export default function Home() {
   return (
     <Providers>
-      <main className="relative h-screen w-screen overflow-hidden">
+      <main className="desktop-shell relative h-dvh w-screen overflow-hidden">
         <Wallpaper />
-        <Desktop />
+        <div className="desktop-only">
+          <Desktop />
+        </div>
+        <MobileHome />
         <WindowManager />
-        <div className="absolute bottom-2 z-dock w-full flex justify-center pointer-events-none [&>*]:pointer-events-auto">
+        <div className="desktop-only absolute bottom-2 z-dock w-full flex justify-center pointer-events-none [&>*]:pointer-events-auto">
           <Dock />
         </div>
-        <Launcher />
-        <div className="absolute top-0 inset-x-0 z-menubar pointer-events-none [&>*]:pointer-events-auto">
+        <div className="desktop-only">
+          <Launcher />
+        </div>
+        <div className="desktop-only absolute top-0 inset-x-0 z-menubar pointer-events-none [&>*]:pointer-events-auto">
           <Menubar />
         </div>
         <Spotlight />

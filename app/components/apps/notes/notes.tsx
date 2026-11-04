@@ -293,11 +293,15 @@ const buildNotes = ({
 const Notes: React.FC<AppProps> = ({ payload, openedAt }) => {
   const notes = buildNotes(useContent());
   const [selectedId, setSelectedId] = useState(payload ?? notes[0].id);
+  const [showList, setShowList] = useState(!payload);
   const [search, setSearch] = useState("");
   const isFocused = useWindowFocus();
 
   useEffect(() => {
-    if (payload) setSelectedId(payload);
+    if (payload) {
+      setSelectedId(payload);
+      setShowList(false);
+    }
   }, [payload, openedAt]);
 
   const filteredNotes = notes.filter((note) =>
@@ -306,25 +310,30 @@ const Notes: React.FC<AppProps> = ({ payload, openedAt }) => {
   const selectedNote = notes.find((note) => note.id === selectedId) ?? notes[0];
 
   return (
-    <div className="flex h-full">
+    <div className="notes-layout flex h-full" data-show-list={showList}>
       <aside className="w-40 sm:w-64 shrink-0 flex flex-col select-none">
-        <div className="handle h-[52px] shrink-0" />
+        <div className="handle h-[52px] shrink-0 desktop-only" />
+        <h1 className="mobile-large-title">Notes</h1>
         <div className="px-3 pb-2">
           <div className="flex items-center gap-1.5 h-8 px-2.5 rounded-full bg-black/5 dark:bg-white/[0.08]">
             <Symbol name="magnifyingglass" className="w-3.5 h-3.5 opacity-50" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              aria-label="Search notes"
               placeholder="Search"
               className="w-full bg-transparent outline-none placeholder:text-black/40 dark:placeholder:text-white/40"
             />
           </div>
         </div>
-        <div className="flex-grow overflow-y-auto px-2.5 pb-2">
+        <div className="notes-list flex-grow min-h-0 overflow-y-auto px-2.5 pb-2">
           {filteredNotes.map((note) => (
             <button
               key={note.id}
-              onClick={() => setSelectedId(note.id)}
+              onClick={() => {
+                setSelectedId(note.id);
+                setShowList(false);
+              }}
               data-selected={selectedNote.id === note.id}
               className={cn(
                 "group w-full text-left px-3 py-2 rounded-[10px] cursor-default",
@@ -352,9 +361,18 @@ const Notes: React.FC<AppProps> = ({ payload, openedAt }) => {
           )}
         </div>
       </aside>
-      <article className="flex-grow flex flex-col min-w-0 bg-white dark:bg-[#1e1e1e]">
-        <Toolbar />
-        <div className="selectable flex-grow overflow-y-auto px-6 sm:px-12 pb-8 selection:bg-[#ffd52e]/45">
+      <article className="flex-grow flex flex-col min-w-0 min-h-0 bg-white dark:bg-[#1e1e1e]">
+        <Toolbar
+          leading={
+            <button
+              className="mobile-notes-back"
+              onClick={() => setShowList(true)}
+            >
+              ‹ Notes
+            </button>
+          }
+        />
+        <div className="selectable flex-grow min-h-0 overflow-y-auto px-6 sm:px-12 pb-8 selection:bg-[#ffd52e]/45">
           <div className="text-center text-12 text-black/40 dark:text-white/40 mb-4">
             {selectedNote.date}
           </div>

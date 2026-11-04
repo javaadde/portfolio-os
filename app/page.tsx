@@ -24,8 +24,7 @@ export default async function Home() {
 
   return (
     <>
-      {/* Outside the provider, so the structured data and the link to the text
-          version are part of the static HTML instead of the client bundle. */}
+      {/* Outside the provider so structured data remains static and crawlable. */}
       <JsonLd data={personJsonLd(content)} />
 
       <Providers>

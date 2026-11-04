@@ -1593,13 +1593,6 @@ textarea,
   .mobile-menu-profile {
     margin-bottom: 36px;
   }
-  .mobile-menu-profile > span {
-    display: block;
-    margin-bottom: 4px;
-    color: #666;
-    font-size: 13px;
-    font-weight: 500;
-  }
   .mobile-menu-profile p {
     margin: 0;
     color: #666;

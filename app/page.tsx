@@ -27,12 +27,6 @@ export default async function Home() {
       {/* Outside the provider, so the structured data and the link to the text
           version are part of the static HTML instead of the client bundle. */}
       <JsonLd data={personJsonLd(content)} />
-      <a
-        href="/projects"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-power focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-13 focus:text-black focus:shadow-lg"
-      >
-        Skip to the text version of this portfolio
-      </a>
 
       <Providers>
         <main className="desktop-shell relative h-dvh w-screen overflow-hidden">

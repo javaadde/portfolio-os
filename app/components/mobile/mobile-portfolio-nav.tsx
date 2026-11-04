@@ -74,7 +74,6 @@ export default function MobilePortfolioNav({ profile }: { profile: Profile }) {
             >
               <div className="mobile-menu-body">
                 <div className="mobile-menu-profile">
-                  <span>{profile.name}</span>
                   <p>{profile.role}</p>
                   {location && (
                     <p>

@@ -9,7 +9,9 @@ import {
 } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useFullscreen } from "../../hooks/use-fullscreen";
 import type { Profile } from "../../lib/content/schema";
+import Symbol from "../symbol";
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -21,8 +23,10 @@ const navigation = [
 
 export default function MobilePortfolioNav({ profile }: { profile: Profile }) {
   const [open, setOpen] = useState(false);
+  const [fullscreenNotice, setFullscreenNotice] = useState(false);
   const reduceMotion = useReducedMotion();
   const pathname = usePathname();
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
   const location = profile.summary
     .match(/\bbased in ([^—.]+)/i)?.[1]
     ?.replace(/,\s*$/, "")
@@ -35,20 +39,61 @@ export default function MobilePortfolioNav({ profile }: { profile: Profile }) {
           <Link href="/" className="mobile-portfolio-brand">
             {profile.name}
           </Link>
-          <button
-            type="button"
-            className="mobile-portfolio-menu-button"
-            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={open}
-            aria-controls={open ? "mobile-portfolio-menu" : undefined}
-            onClick={(event) => {
-              event.stopPropagation();
-              setOpen((value) => !value);
-            }}
-          >
-            {open ? "Close" : "Menu"}
-          </button>
+          <div className="mobile-portfolio-header-actions">
+            <button
+              type="button"
+              className="mobile-portfolio-fullscreen-button"
+              aria-label={
+                isFullscreen ? "Exit full screen" : "Enter full screen"
+              }
+              aria-pressed={isFullscreen}
+              onClick={async (event) => {
+                event.stopPropagation();
+                setFullscreenNotice(!(await toggleFullscreen()));
+              }}
+            >
+              <Symbol
+                name={
+                  isFullscreen
+                    ? "arrow-down-right-and-arrow-up-left"
+                    : "arrow-up-left-and-arrow-down-right"
+                }
+                className="w-4 h-4"
+              />
+            </button>
+            <button
+              type="button"
+              className="mobile-portfolio-menu-button"
+              aria-label={
+                open ? "Close navigation menu" : "Open navigation menu"
+              }
+              aria-expanded={open}
+              aria-controls={open ? "mobile-portfolio-menu" : undefined}
+              onClick={(event) => {
+                event.stopPropagation();
+                setOpen((value) => !value);
+              }}
+            >
+              {open ? "Close" : "Menu"}
+            </button>
+          </div>
         </header>
+
+        {fullscreenNotice && (
+          <div className="mobile-fullscreen-notice" role="status">
+            <span>
+              Full screen isn’t supported here. Add the site to your Home Screen
+              for an app-like view.
+            </span>
+            <button
+              type="button"
+              onClick={() => setFullscreenNotice(false)}
+              aria-label="Dismiss full screen message"
+            >
+              ×
+            </button>
+          </div>
+        )}
 
         <AnimatePresence>
           {open && (

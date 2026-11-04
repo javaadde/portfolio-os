@@ -9,6 +9,7 @@ import { getApp } from "../../lib/apps";
 import { SESSION_KEYS } from "../../lib/constants";
 import { removeStorage } from "../../lib/storage";
 import { useOpenTarget } from "../../hooks/use-open-file";
+import { useFullscreen } from "../../hooks/use-fullscreen";
 
 export interface Menu {
   id: string;
@@ -26,10 +27,14 @@ export function useMenus(): Menu[] {
     minimizeApp,
     focusApp,
     toggleMaximize,
-    toggleFullscreen,
+    toggleFullscreen: toggleWindowFullscreen,
     fullscreenId,
     closeAll,
   } = useWindows();
+  const {
+    isFullscreen: isBrowserFullscreen,
+    toggleFullscreen: toggleBrowserFullscreen,
+  } = useFullscreen();
   const { isDark, setAppearance, setPower } = useSystem();
   const { notify } = useNotifications();
   const { profile, experiences } = useContent();
@@ -129,7 +134,7 @@ export function useMenus(): Menu[] {
         {
           label: fullscreenId ? "Exit Full Screen" : "Enter Full Screen",
           disabled: !focusedId,
-          onClick: () => focusedId && toggleFullscreen(focusedId),
+          onClick: () => focusedId && toggleWindowFullscreen(focusedId),
         },
         "separator",
         {
@@ -182,9 +187,15 @@ export function useMenus(): Menu[] {
           onClick: () => focusedId && toggleMaximize(focusedId),
         },
         {
-          label: fullscreenId ? "Exit Full Screen" : "Enter Full Screen",
-          disabled: !focusedId,
-          onClick: () => focusedId && toggleFullscreen(focusedId),
+          label: isBrowserFullscreen ? "Exit Full Screen" : "Enter Full Screen",
+          requiresUserActivation: true,
+          onClick: async () => {
+            if (!(await toggleBrowserFullscreen()))
+              notify(
+                "Full screen unavailable",
+                "This browser or embedded preview does not allow full screen."
+              );
+          },
         },
         ...(windows.length ? ["separator" as const] : []),
         ...windows.map((w) => ({

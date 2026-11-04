@@ -10,7 +10,9 @@ import Symbol from "../symbol";
 import { useWindows } from "../../context/window-context";
 import { useSystem } from "../../context/system-context";
 import { useOverlays } from "../../context/overlay-context";
+import { useNotifications } from "../../context/notification-context";
 import { useClickOutside } from "../../hooks/use-click-outside";
+import { useFullscreen } from "../../hooks/use-fullscreen";
 import { useContent } from "../../context/content-context";
 import { cn } from "../../lib/utils";
 import { MENUBAR_HEIGHT } from "../../lib/constants";
@@ -49,6 +51,8 @@ const Menubar: React.FC = () => {
   const { fullscreenId } = useWindows();
   const { wallpaper } = useSystem();
   const { setSpotlightOpen } = useOverlays();
+  const { notify } = useNotifications();
+  const { isFullscreen, toggleFullscreen } = useFullscreen();
   const { system } = useContent();
   const isLightWallpaper = !!system.wallpapers.find((w) => w.id === wallpaper)
     ?.isLight;
@@ -112,6 +116,30 @@ const Menubar: React.FC = () => {
         </div>
         <div className="flex items-center h-full mr-2.5 gap-0.5">
           <BatteryStatus />
+          <button
+            type="button"
+            aria-label={isFullscreen ? "Exit full screen" : "Enter full screen"}
+            title={isFullscreen ? "Exit full screen" : "Enter full screen"}
+            aria-pressed={isFullscreen}
+            onClick={async () => {
+              setOpenMenu(null);
+              if (!(await toggleFullscreen()))
+                notify(
+                  "Full screen unavailable",
+                  "This browser or embedded preview does not allow full screen."
+                );
+            }}
+            className="menubar-fullscreen-button h-6 min-w-6 px-1.5 flex items-center justify-center rounded-full"
+          >
+            <Symbol
+              name={
+                isFullscreen
+                  ? "arrow-down-right-and-arrow-up-left"
+                  : "arrow-up-left-and-arrow-down-right"
+              }
+              className="w-3.5 h-3.5"
+            />
+          </button>
           <MenuItem
             isOpen={false}
             onClick={() => {

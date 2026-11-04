@@ -10,6 +10,7 @@ export type MenuEntry =
       onClick?: () => void;
       disabled?: boolean;
       checked?: boolean;
+      requiresUserActivation?: boolean;
     }
   | "separator";
 
@@ -37,10 +38,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
 
   const select = (index: number) => {
     if (selected !== null || !isEnabled(index)) return;
+    const entry = entries[index] as MenuItem;
+    if (entry.requiresUserActivation) entry.onClick?.();
     setSelected(index);
     setTimeout(() => setIsClosing(true), 170);
     setTimeout(() => {
-      (entries[index] as MenuItem).onClick?.();
+      if (!entry.requiresUserActivation) entry.onClick?.();
       onClose();
     }, 300);
   };

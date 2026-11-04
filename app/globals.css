@@ -167,6 +167,12 @@ textarea,
   display: none;
 }
 
+@media (hover: hover) {
+  .menubar-fullscreen-button:hover {
+    background-color: rgb(255 255 255 / 20%);
+  }
+}
+
 @media (max-width: 767px) {
   .desktop-only {
     display: none;
@@ -1551,6 +1557,12 @@ textarea,
     padding: env(safe-area-inset-top) 28px 0;
     background: #e9e9e7;
   }
+  .mobile-portfolio-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: -10px;
+  }
   .site-shell .mobile-portfolio-header {
     margin: 0;
   }
@@ -1569,13 +1581,46 @@ textarea,
     z-index: 60;
     min-width: 54px;
     min-height: 44px;
-    margin-right: -10px;
     padding: 0 10px;
     color: #111;
     font-size: 13px;
     font-weight: 650;
     text-align: right;
     touch-action: manipulation;
+  }
+  .mobile-portfolio-fullscreen-button {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    color: #141414;
+    touch-action: manipulation;
+  }
+  .mobile-fullscreen-notice {
+    position: fixed;
+    right: 16px;
+    bottom: calc(env(safe-area-inset-bottom) + 16px);
+    left: 16px;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: #141414;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+  }
+  .mobile-fullscreen-notice button {
+    flex: 0 0 auto;
+    min-width: 32px;
+    min-height: 32px;
+    color: inherit;
+    font-size: 22px;
+    line-height: 1;
   }
   .mobile-portfolio-menu {
     position: fixed;

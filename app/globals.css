@@ -138,12 +138,171 @@ textarea,
   display: none;
 }
 
+.macos-system {
+  display: contents;
+}
+
+.phone-portfolio {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .desktop-only {
     display: none;
   }
-  .ios-shell {
-    display: contents;
+  .desktop-wallpaper,
+  .macos-system {
+    display: none;
+  }
+  .phone-portfolio {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: calc(env(safe-area-inset-top) + 18px) 20px
+      calc(env(safe-area-inset-bottom) + 22px);
+    background: #e9e9e7;
+    color: #111;
+    font-family: var(--font-sf), sans-serif;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  .phone-portfolio-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 30px;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+  .phone-portfolio-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .phone-menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    margin: -7px -10px -7px 0;
+    padding: 0 10px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  .phone-menu-toggle:focus-visible,
+  .phone-portfolio a:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
+  }
+  .phone-index {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 18px;
+  }
+  .phone-portrait-wrap {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone-portrait {
+    position: relative;
+    width: min(48vw, 190px);
+    aspect-ratio: 0.78;
+    overflow: hidden;
+    outline: 1px solid rgb(0 0 0 / 10%);
+    outline-offset: -1px;
+  }
+  .phone-portrait-image {
+    object-fit: cover;
+    filter: grayscale(1);
+  }
+  .phone-display-name {
+    width: 100%;
+    flex: 0 0 auto;
+    margin: 18px 0 0;
+    font-family: "Bodoni 72", Didot, "Times New Roman", serif;
+    font-size: clamp(44px, 13.5vw, 68px);
+    font-weight: 300;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    overflow-wrap: anywhere;
+  }
+  .phone-menu-view {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-top: clamp(60px, 15vh, 120px);
+    overscroll-behavior: contain;
+  }
+  .phone-profile {
+    margin-bottom: auto;
+    padding-bottom: 32px;
+  }
+  .phone-profile-name {
+    margin: 0 0 2px;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .phone-profile h1 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+  }
+  .phone-profile-summary {
+    max-width: 34rem;
+    margin: 10px 0 0;
+    color: #666;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .phone-portfolio-nav {
+    border-top: 1px solid #9b9b99;
+  }
+  .phone-portfolio-nav a {
+    display: grid;
+    grid-template-columns: 42px 1fr 20px;
+    align-items: center;
+    min-height: 51px;
+    border-bottom: 1px solid #aaa;
+    color: #111;
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+  }
+  .phone-portfolio-nav a.is-current {
+    color: #777;
+  }
+  .phone-nav-number {
+    font-size: 18px;
+    font-variant-numeric: tabular-nums;
+  }
+  .phone-nav-arrow {
+    justify-self: end;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .phone-portfolio-nav a:active {
+    color: #777;
   }
   .ios-status-bar {
     position: absolute;

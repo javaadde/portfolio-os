@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MobileHome from "./components/mobile/mobile-home";
+import MobilePortfolio from "./components/mobile/mobile-portfolio";
 import Providers from "./providers";
 import Desktop from "./components/desktop/desktop";
 import Dock from "./components/dock/dock";
@@ -36,12 +36,20 @@ export default async function Home() {
 
       <Providers>
         <main className="desktop-shell relative h-dvh w-screen overflow-hidden">
-          <Wallpaper />
+          <div className="desktop-wallpaper">
+            <Wallpaper />
+          </div>
           <div className="desktop-only">
             <Desktop />
           </div>
-          <MobileHome />
-          <WindowManager />
+          <MobilePortfolio profile={content.profile} />
+          <div className="macos-system">
+            <WindowManager />
+            <Spotlight />
+            <Notifications />
+            <BrightnessOverlay />
+            <PowerScreen />
+          </div>
           <div className="desktop-only absolute bottom-2 z-dock w-full flex justify-center pointer-events-none [&>*]:pointer-events-auto">
             <Dock />
           </div>
@@ -51,10 +59,6 @@ export default async function Home() {
           <div className="desktop-only absolute top-0 inset-x-0 z-menubar pointer-events-none [&>*]:pointer-events-auto">
             <Menubar />
           </div>
-          <Spotlight />
-          <Notifications />
-          <BrightnessOverlay />
-          <PowerScreen />
         </main>
       </Providers>
     </>

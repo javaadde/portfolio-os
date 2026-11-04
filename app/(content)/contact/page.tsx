@@ -5,7 +5,7 @@ import { loadContent } from "../../lib/content/server";
 export const metadata = pageMetadata({
   title: "Contact",
   description:
-    "Contact Mohammed Javad E by email, GitHub, or LinkedIn, and download the latest résumé.",
+    "Contact Mohammed Javad by email, GitHub, or LinkedIn, and download the latest résumé.",
   path: "/contact",
 });
 

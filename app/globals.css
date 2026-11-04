@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Nippo";
+  src: url("/fonts/Nippo-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Magnolia";
+  src: url("/fonts/Magnolia.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 html,
 body {
   height: 100%;
@@ -146,6 +162,11 @@ textarea,
   display: none;
 }
 
+.mobile-portfolio-nav,
+.site-mobile-footer {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .desktop-only {
     display: none;
@@ -158,68 +179,130 @@ textarea,
     position: absolute;
     inset: 0;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding: calc(env(safe-area-inset-top) + 18px) 20px
-      calc(env(safe-area-inset-bottom) + 22px);
-    background: #e9e9e7;
-    color: #111;
-    font-family: var(--font-sf), sans-serif;
+    display: block;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-behavior: smooth;
+    padding: 0 22px calc(env(safe-area-inset-bottom) + 22px);
+    background: #f5f5f3;
+    color: #141414;
+    font-family: "Nippo", sans-serif;
     user-select: text;
     -webkit-user-select: text;
   }
-  .phone-portfolio-header {
-    display: flex;
-    flex: 0 0 auto;
+  .phone-site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
-    min-height: 30px;
-    gap: 16px;
-    font-size: 13px;
-    font-weight: 650;
-    letter-spacing: -0.025em;
+    min-height: calc(58px + env(safe-area-inset-top));
+    margin: 0 -22px;
+    padding: env(safe-area-inset-top) 22px 0;
+    background: rgb(245 245 243 / 90%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
   }
-  .phone-portfolio-name {
+  .phone-site-brand {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .phone-site-role {
+    color: #777;
+    font-size: 11px;
+    text-align: center;
+  }
   .phone-menu-toggle {
+    justify-self: end;
     min-width: 44px;
     min-height: 44px;
-    margin: -7px -10px -7px 0;
-    padding: 0 10px;
-    text-align: right;
-    font-size: 13px;
-    font-weight: 650;
+    margin-right: -10px;
+    border: 1px solid #d7d7d3;
+    border-radius: 99px;
+    padding: 0 13px;
+    background: #f5f5f3;
+    font: inherit;
+    font-size: 12px;
+    transition:
+      transform 150ms ease-out,
+      background-color 150ms ease-out,
+      color 150ms ease-out;
   }
   .phone-menu-toggle:focus-visible,
   .phone-portfolio a:focus-visible {
-    outline: 2px solid #111;
+    outline: 2px solid #141414;
     outline-offset: 3px;
   }
-  .phone-index {
+  .phone-mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
     display: flex;
-    flex: 1;
-    min-height: 0;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding-top: 18px;
+    overflow-y: auto;
+    padding: calc(env(safe-area-inset-top) + 80px) 24px
+      calc(env(safe-area-inset-bottom) + 24px);
+    background: #f5f5f3;
+    overscroll-behavior: contain;
   }
-  .phone-portrait-wrap {
+  .phone-mobile-menu a {
+    display: grid;
+    grid-template-columns: 36px 1fr 20px;
+    align-items: center;
+    min-height: 66px;
+    border-bottom: 1px solid #d5d5d1;
+    color: #141414;
+    font-size: clamp(24px, 7vw, 32px);
+    font-weight: 500;
+    letter-spacing: -0.055em;
+    text-decoration: none;
+  }
+  .phone-mobile-menu a:first-child {
+    border-top: 1px solid #d5d5d1;
+  }
+  .phone-mobile-menu a span:first-child,
+  .phone-mobile-menu a span:last-child {
+    color: #777;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .phone-mobile-menu a span:last-child {
+    justify-self: end;
+    font-size: 18px;
+  }
+  .phone-hero {
     display: flex;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+    min-height: calc(100svh - 58px - env(safe-area-inset-top));
+    flex-direction: column;
+    padding: 24px 0 26px;
+    scroll-margin-top: 70px;
   }
-  .phone-portrait {
+  .phone-hero-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #5e5e5a;
+    font-size: 11px;
+    font-weight: 450;
+    line-height: 1.4;
+  }
+  .phone-hero-image {
     position: relative;
-    width: min(48vw, 190px);
+    width: min(46vw, 182px);
     aspect-ratio: 0.78;
+    flex: 0 0 auto;
+    align-self: center;
+    margin: auto 0 22px;
     overflow: hidden;
     outline: 1px solid rgb(0 0 0 / 10%);
     outline-offset: -1px;
@@ -228,88 +311,546 @@ textarea,
     object-fit: cover;
     filter: grayscale(1);
   }
-  .phone-display-name {
-    width: 100%;
-    flex: 0 0 auto;
-    margin: 18px 0 0;
-    font-family: "Bodoni 72", Didot, "Times New Roman", serif;
-    font-size: clamp(44px, 13.5vw, 68px);
-    font-weight: 300;
-    line-height: 0.94;
-    letter-spacing: -0.045em;
-    overflow-wrap: anywhere;
-  }
-  .phone-menu-view {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    flex-direction: column;
-    overflow-y: auto;
-    padding-top: clamp(60px, 15vh, 120px);
-    overscroll-behavior: contain;
-  }
-  .phone-profile {
-    margin-bottom: auto;
-    padding-bottom: 32px;
-  }
-  .phone-profile-name {
-    margin: 0 0 2px;
-    color: #666;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-  .phone-profile h1 {
+  .phone-hero-copy h1 {
+    max-width: 12ch;
     margin: 0;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.35;
+    font-family: "Magnolia", "Times New Roman", serif;
+    font-size: clamp(42px, 13vw, 58px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
   }
-  .phone-profile-summary {
-    max-width: 34rem;
-    margin: 10px 0 0;
-    color: #666;
+  .phone-hero-copy p {
+    max-width: 38ch;
+    margin: 12px 0 0;
+    color: #5d5d59;
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
+    text-wrap: pretty;
   }
-  .phone-portfolio-nav {
-    border-top: 1px solid #9b9b99;
-  }
-  .phone-portfolio-nav a {
-    display: grid;
-    grid-template-columns: 42px 1fr 20px;
+  .phone-scroll-cue {
+    display: flex;
     align-items: center;
-    min-height: 51px;
-    border-bottom: 1px solid #aaa;
-    color: #111;
-    font-size: 20px;
-    font-weight: 650;
-    letter-spacing: -0.035em;
+    justify-content: space-between;
+    margin-top: 22px;
+    border-top: 1px solid #d5d5d1;
+    padding-top: 12px;
+    color: #5e5e5a;
+    font-size: 11px;
     text-decoration: none;
   }
-  .phone-portfolio-nav a.is-current {
-    color: #777;
-  }
-  .phone-nav-number {
+  .phone-scroll-cue span {
+    color: #141414;
     font-size: 18px;
-    font-variant-numeric: tabular-nums;
   }
-  .phone-nav-arrow {
-    justify-self: end;
-    font-size: 18px;
+  .phone-work-section,
+  .phone-about-section,
+  .phone-experience-section,
+  .phone-contact-section {
+    padding: 76px 0;
+    scroll-margin-top: 58px;
+  }
+  .phone-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 25px;
+  }
+  .phone-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: #72726d;
+    font-size: 11px;
+    font-weight: 450;
+    line-height: 1.4;
+  }
+  .phone-section-heading h2,
+  .phone-about-section h2 {
+    margin: 0;
+    font-size: clamp(30px, 9vw, 40px);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.065em;
+  }
+  .phone-pill-link {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 99px;
+    padding: 0 14px;
+    background: #141414;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 450;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 150ms ease-out;
+  }
+  .phone-project-list {
+    display: grid;
+    gap: 28px;
+  }
+  .phone-project-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  .phone-project-art {
+    position: relative;
+    display: flex;
+    min-height: 0;
+    aspect-ratio: 1.12;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 13px;
+    padding: 16px;
+    background: #dce6df;
+    color: #152c24;
+  }
+  .phone-project-art::before {
+    position: absolute;
+    top: 23%;
+    left: 12%;
+    width: 76%;
+    height: 66%;
+    border: 1px solid rgb(0 0 0 / 8%);
+    border-radius: 12px;
+    background: rgb(255 255 255 / 76%);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 8%);
+    content: "";
+    transform: rotate(-3deg);
+  }
+  .phone-project-art::after {
+    position: absolute;
+    right: 18%;
+    bottom: 21%;
+    width: 32%;
+    height: 22%;
+    border-radius: 5px;
+    background: rgb(77 117 94 / 20%);
+    content: "";
+    transform: rotate(5deg);
+  }
+  .phone-project-art[data-project="haruru"] {
+    background: #272a2b;
+    color: #f3f0e9;
+  }
+  .phone-project-art[data-project="haruru"]::before {
+    border-color: rgb(255 255 255 / 12%);
+    background:
+      radial-gradient(
+        circle at center,
+        transparent 31%,
+        #b7a77f 32% 33%,
+        transparent 34% 46%,
+        #b7a77f 47% 48%,
+        transparent 49%
+      ),
+      #414544;
+  }
+  .phone-project-art[data-project="haruru"]::after {
+    border-radius: 50%;
+    background: #d0b878;
+  }
+  .phone-project-art[data-project="evolf"] {
+    background: #282522;
+    color: #f6f3ef;
+  }
+  .phone-project-art[data-project="evolf"]::before {
+    background: linear-gradient(
+      145deg,
+      #38332d 0 52%,
+      #df6f35 52% 54%,
+      #1f1e1c 54%
+    );
+  }
+  .phone-project-art[data-project="evolf"]::after {
+    width: 22%;
+    height: 22%;
+    border-radius: 50%;
+    background: #ed8d50;
+  }
+  .phone-project-art[data-project="zaiko"] {
+    background: #dce5ce;
+    color: #203b28;
+  }
+  .phone-project-art[data-project="zaiko"]::before {
+    background:
+      linear-gradient(#eaf0e2, #eaf0e2) 12% 14% / 30% 26% no-repeat,
+      linear-gradient(#c3d2ae, #c3d2ae) 52% 14% / 30% 26% no-repeat,
+      linear-gradient(#d2dfc1, #d2dfc1) 12% 56% / 30% 26% no-repeat,
+      linear-gradient(#f4f5ee, #f4f5ee) 52% 56% / 30% 26% no-repeat,
+      #f4f5ee;
+  }
+  .phone-project-art[data-project="hayon"] {
+    background: #e5dff1;
+    color: #30234d;
+  }
+  .phone-project-art[data-project="hayon"]::before {
+    background:
+      linear-gradient(90deg, #8b72c5 0 18%, transparent 18%) 12% 72% / 78% 10%
+        no-repeat,
+      linear-gradient(90deg, #8b72c5 0 44%, transparent 44%) 12% 55% / 78% 10%
+        no-repeat,
+      linear-gradient(90deg, #8b72c5 0 65%, transparent 65%) 12% 38% / 78% 10%
+        no-repeat,
+      #f6f3fb;
+  }
+  .phone-project-art[data-project="papr"] {
+    background: #dce8e8;
+    color: #173b3c;
+  }
+  .phone-project-art[data-project="papr"]::before {
+    background:
+      linear-gradient(#b5d5d3, #b5d5d3) 12% 26% / 54% 2px no-repeat,
+      linear-gradient(#d1e2df, #d1e2df) 12% 42% / 76% 2px no-repeat,
+      linear-gradient(#d1e2df, #d1e2df) 12% 51% / 76% 2px no-repeat,
+      linear-gradient(#d1e2df, #d1e2df) 12% 60% / 58% 2px no-repeat,
+      #f7f8f5;
+  }
+  .phone-project-art[data-project="smileos"] {
+    background: #d5e5e9;
+    color: #173944;
+  }
+  .phone-project-art[data-project="smileos"]::before {
+    background:
+      radial-gradient(circle at 74% 34%, #8eb6c1 0 14%, transparent 15%),
+      linear-gradient(90deg, #d5e5e9 0 46%, transparent 46%) 10% 68% / 78% 8px
+        no-repeat,
+      #f7faf9;
+  }
+  .phone-project-art[data-project="remain-fit"] {
+    background: #e8d8ca;
+    color: #493125;
+  }
+  .phone-project-art[data-project="remain-fit"]::before {
+    background:
+      radial-gradient(
+        circle at 50% 48%,
+        transparent 0 27%,
+        #d09b73 28% 30%,
+        transparent 31%
+      ),
+      #f7f2ed;
+  }
+  .phone-project-art-label,
+  .phone-project-art-mark,
+  .phone-project-art-shape {
+    position: relative;
+    z-index: 1;
+  }
+  .phone-project-art-label {
+    align-self: flex-start;
+    border: 1px solid currentColor;
+    border-radius: 99px;
+    padding: 6px 9px;
+    background: rgb(255 255 255 / 32%);
+    font-size: 9px;
+    font-weight: 500;
+  }
+  .phone-project-art-mark {
+    font-family: "Magnolia", "Times New Roman", serif;
+    font-size: clamp(22px, 7vw, 32px);
+    letter-spacing: -0.04em;
+  }
+  .phone-project-art-shape {
+    display: none;
+  }
+  .phone-project-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 12px;
+  }
+  .phone-project-caption h3 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1.25;
+  }
+  .phone-project-caption p {
+    margin: 3px 0 0;
+    color: #70706b;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .phone-project-caption > span {
+    font-size: 17px;
+  }
+  .phone-tech-section {
+    margin: 8px -22px 0;
+    overflow: hidden;
+    border-top: 1px solid #d5d5d1;
+    border-bottom: 1px solid #d5d5d1;
+    padding: 18px 0 20px;
+  }
+  .phone-tech-section > .phone-eyebrow {
+    padding: 0 22px;
+  }
+  .phone-tech-window {
+    overflow: hidden;
+  }
+  .phone-tech-track {
+    display: flex;
+    width: max-content;
+    animation: phone-tech-marquee 28s linear infinite;
+  }
+  .phone-tech-track ul {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin: 0;
+    padding: 0 22px;
+    list-style: none;
+  }
+  .phone-tech-track li {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 24px;
+    font-weight: 450;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+  }
+  .phone-tech-track li::after {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #898983;
+    content: "";
+  }
+  .phone-about-section {
+    border-bottom: 1px solid #d5d5d1;
+  }
+  .phone-about-section h2 {
+    max-width: 13ch;
+    font-family: "Magnolia", "Times New Roman", serif;
+    font-size: clamp(36px, 10.5vw, 48px);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+  .phone-about-section h2 em {
     font-weight: 400;
   }
-  .phone-portfolio-nav a:active {
+  .phone-about-grid {
+    display: grid;
+    gap: 26px;
+    margin-top: 24px;
+  }
+  .phone-about-copy p {
+    max-width: 56ch;
+    margin: 0;
+    color: #54544f;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+  .phone-about-copy > * + * {
+    margin-top: 14px;
+  }
+  .phone-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 12px;
+    border-top: 1px solid #d5d5d1;
+    padding-top: 18px;
+  }
+  .phone-stat-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .phone-stat-grid strong {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+  .phone-stat-grid span {
+    color: #70706b;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .phone-stat-grid .phone-pill-link {
+    justify-self: start;
+  }
+  .phone-experience-section {
+    border-bottom: 1px solid #d5d5d1;
+  }
+  .phone-section-count {
     color: #777;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .phone-experience-list {
+    border-top: 1px solid #d5d5d1;
+  }
+  .phone-experience-item {
+    display: grid;
+    gap: 8px;
+    border-bottom: 1px solid #d5d5d1;
+    padding: 18px 0;
+  }
+  .phone-experience-dates {
+    color: #72726d;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .phone-experience-item h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1.3;
+  }
+  .phone-experience-company {
+    margin: 2px 0 0;
+    color: #72726d;
+    font-size: 12px;
+  }
+  .phone-experience-description {
+    margin: 10px 0 0;
+    color: #54544f;
+    font-size: 13px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .phone-contact-section {
+    padding: 70px 0 60px;
+  }
+  .phone-contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid #d5d5d1;
+    color: #141414;
+    font-size: clamp(43px, 14vw, 62px);
+    font-weight: 500;
+    letter-spacing: -0.08em;
+    line-height: 1.05;
+    text-decoration: none;
+    transition: transform 150ms ease-out;
+  }
+  .phone-contact-link span {
+    font-size: 0.72em;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .phone-site-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 18px;
+    border-top: 1px solid #d5d5d1;
+    padding: 24px 0 4px;
+  }
+  .phone-footer-intro strong {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .phone-footer-intro p,
+  .phone-footer-intro a,
+  .phone-footer-socials a {
+    display: block;
+    margin: 5px 0 0;
+    color: #6c6c67;
+    font-size: 11px;
+    line-height: 1.5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .phone-site-footer nav,
+  .phone-footer-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .phone-site-footer nav a,
+  .phone-footer-socials a {
+    margin: 0;
+    color: #141414;
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .phone-footer-bottom {
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid #d5d5d1;
+    padding-top: 14px;
+    color: #72726d;
+    font-size: 10px;
+  }
+  .phone-footer-bottom a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .phone-portfolio a:focus-visible,
+  .phone-portfolio button:focus-visible {
+    outline: 2px solid #141414;
+    outline-offset: 3px;
+  }
+  .phone-menu-toggle:active,
+  .phone-pill-link:active,
+  .phone-contact-link:active {
+    transform: scale(0.96);
+  }
+  @keyframes phone-tech-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (hover: hover) {
+    .phone-project-art {
+      transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+    }
+    .phone-project-link:hover .phone-project-art {
+      transform: scale(0.985);
+    }
+    .phone-menu-toggle:hover {
+      background: #141414;
+      color: white;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .phone-portfolio {
+      scroll-behavior: auto;
+    }
+    .phone-tech-track {
+      animation: none;
+      transform: none;
+    }
+    .phone-tech-track ul + ul {
+      display: none;
+    }
+    .phone-menu-toggle,
+    .phone-project-art {
+      transition: none;
+    }
+    .phone-menu-toggle:active,
+    .phone-pill-link:active,
+    .phone-contact-link:active {
+      transform: none;
+    }
   }
   .ios-status-bar {
     position: absolute;
     inset: 0 0 auto;
     z-index: 30;
     height: calc(44px + env(safe-area-inset-top));
-    padding: env(safe-area-inset-top) 28px 0;
+    padding: env(safe-area-inset-top) 22px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -975,5 +1516,306 @@ textarea,
   }
   .mobile-app .app-toolbar button {
     min-height: 44px;
+  }
+}
+
+@media (max-width: 767px) {
+  .phone-portfolio {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    padding: 0 22px calc(env(safe-area-inset-bottom) + 22px);
+    background: #e9e9e7;
+    color: #141414;
+    font-family: "Nippo", sans-serif;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  .mobile-portfolio-nav {
+    display: block;
+  }
+  .mobile-portfolio-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    height: calc(58px + env(safe-area-inset-top));
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 -22px;
+    padding: env(safe-area-inset-top) 28px 0;
+    background: #e9e9e7;
+  }
+  .site-shell .mobile-portfolio-header {
+    margin: 0;
+  }
+  .mobile-portfolio-brand {
+    overflow: hidden;
+    color: #141414;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mobile-portfolio-menu-button {
+    position: relative;
+    z-index: 60;
+    min-width: 54px;
+    min-height: 44px;
+    margin-right: -10px;
+    padding: 0 10px;
+    color: #111;
+    font-size: 13px;
+    font-weight: 650;
+    text-align: right;
+    touch-action: manipulation;
+  }
+  .mobile-portfolio-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    padding: calc(env(safe-area-inset-top) + 58px) 22px
+      calc(env(safe-area-inset-bottom) + 26px);
+    background: #e9e9e7;
+    overscroll-behavior: contain;
+  }
+  .mobile-menu-profile {
+    margin-bottom: 36px;
+  }
+  .mobile-menu-profile > span {
+    display: block;
+    margin-bottom: 4px;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .mobile-menu-profile p {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .mobile-menu-profile p + p {
+    margin-top: 10px;
+  }
+  .mobile-menu-profile p:first-of-type {
+    color: #111;
+    font-weight: 650;
+  }
+  .mobile-menu-profile p span {
+    color: #666;
+    font-weight: 500;
+  }
+  .mobile-menu-body nav {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #a9a9a6;
+  }
+  .mobile-menu-body nav a {
+    display: grid;
+    grid-template-columns: 42px 1fr 20px;
+    align-items: center;
+    min-height: 52px;
+    border-bottom: 1px solid #aaa;
+    color: #111;
+    font-size: 21px;
+    font-weight: 650;
+    letter-spacing: -0.045em;
+    text-decoration: none;
+  }
+  .mobile-menu-body nav a span:first-child {
+    color: #111;
+    font-size: 18px;
+    font-variant-numeric: tabular-nums;
+  }
+  .mobile-menu-body nav a span:last-child {
+    justify-self: end;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .mobile-menu-body nav a[aria-current="page"] {
+    color: #777;
+  }
+  .mobile-menu-body nav a[aria-current="page"] span:first-child {
+    color: #777;
+  }
+  .mobile-menu-contact {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    border-top: 1px solid #d7d7d3;
+    margin-top: auto;
+    padding-top: 22px;
+  }
+  .mobile-menu-contact > div > span {
+    display: block;
+    margin-bottom: 6px;
+    color: #73736e;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .mobile-menu-email a {
+    color: #111;
+    font-size: clamp(17px, 5vw, 21px);
+    font-weight: 450;
+    letter-spacing: -0.055em;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .mobile-menu-socials > div {
+    display: flex;
+    gap: 10px;
+  }
+  .mobile-menu-socials a {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid #bdbdb8;
+    border-radius: 50%;
+    color: #111;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .phone-home-hero {
+    display: flex;
+    min-height: calc(100svh - 58px - env(safe-area-inset-top));
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0 calc(env(safe-area-inset-bottom) + 12px);
+  }
+  .phone-home-portrait {
+    position: relative;
+    width: min(52vw, 210px);
+    aspect-ratio: 0.78;
+    flex: 0 0 auto;
+    align-self: center;
+    margin: auto 0;
+    overflow: hidden;
+    background: #d8d8d6;
+    outline: 1px solid rgb(0 0 0 / 10%);
+    outline-offset: -1px;
+  }
+  .phone-home-image {
+    object-fit: cover;
+    object-position: center 34%;
+  }
+  .phone-display-name {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    color: #111;
+    font-family: "Magnolia", "Times New Roman", serif;
+    font-size: clamp(30px, 9vw, 42px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+  }
+  .site-shell {
+    --site-bg: #e9e9e7;
+    --site-header: #e9e9e7;
+    --site-surface: #fff;
+    --site-fg: #141414;
+    --site-muted: #666660;
+    --site-rule: #d7d7d3;
+    --site-accent: #141414;
+    font-family: "Nippo", sans-serif;
+  }
+  .site-desktop-header,
+  .site-desktop-footer {
+    display: none;
+  }
+  .site-shell > main#content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 30px 22px 64px;
+  }
+  .site-shell main > header {
+    border-color: var(--site-rule);
+    padding-bottom: 24px;
+  }
+  .site-shell main > header h1 {
+    font-family: "Magnolia", "Times New Roman", serif;
+    font-size: clamp(38px, 12vw, 48px);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    overflow-wrap: anywhere;
+  }
+  .site-shell main > header p {
+    margin-top: 12px;
+    color: var(--site-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .site-shell main section {
+    margin-top: 44px;
+  }
+  .site-shell main section > h2,
+  .site-shell main article h2 {
+    font-size: 23px;
+    font-weight: 500;
+    letter-spacing: -0.055em;
+  }
+  .site-shell main section > div {
+    margin-top: 14px;
+  }
+  .site-shell main p {
+    overflow-wrap: anywhere;
+  }
+  .site-shell main a {
+    text-underline-offset: 3px;
+  }
+  .site-shell main a:focus-visible,
+  .site-shell footer a:focus-visible,
+  .mobile-portfolio-header button:focus-visible {
+    outline: 2px solid #141414;
+    outline-offset: 3px;
+  }
+  .site-mobile-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    border-top: 1px solid var(--site-rule);
+    padding: 22px;
+    color: var(--site-muted);
+    font-size: 12px;
+  }
+  .site-mobile-footer p {
+    margin: 0;
+  }
+  .site-mobile-footer a {
+    color: var(--site-fg);
+    text-decoration: none;
+  }
+  .phone-portfolio a:focus-visible,
+  .phone-portfolio button:focus-visible,
+  .mobile-portfolio-nav a:focus-visible {
+    outline: 2px solid #141414;
+    outline-offset: 3px;
+  }
+  @media (hover: hover) {
+    .mobile-portfolio-menu a {
+      transition:
+        background-color 150ms ease-out,
+        color 150ms ease-out;
+    }
+    .mobile-portfolio-menu a:hover {
+      background-color: #e8e8e5;
+    }
   }
 }

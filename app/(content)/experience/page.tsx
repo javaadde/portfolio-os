@@ -8,7 +8,7 @@ import { loadContent } from "../../lib/content/server";
 export const metadata = pageMetadata({
   title: "Experience",
   description:
-    "Work history of Mohammed Javad E — roles at Bytsolv and Devxtra, and the products shipped in each one.",
+    "Work history of Mohammed Javad — roles at Bytsolv and Devxtra, and the products shipped in each one.",
   path: "/experience",
 });
 

@@ -5,21 +5,19 @@ import {
   PageHeader,
   Section,
 } from "../../components/site/ui";
-import type { ProjectRecord } from "../../lib/content/archive";
-import { getProjectRecords, projectPath } from "../../lib/content/archive";
+import { projectPath } from "../../lib/content/archive";
 import { pageMetadata } from "../../lib/content/seo";
 import { loadContent } from "../../lib/content/server";
+import type { Project } from "../../lib/content/schema";
 
 export const metadata = pageMetadata({
   title: "Projects",
   description:
-    "Engineering case studies for the web, desktop, and mobile projects built by Mohammed Javad E, with stack details and links to live sites and source code.",
+    "Engineering case studies for the web, desktop, and mobile projects built by Mohammed Javad, with stack details and links to live sites and source code.",
   path: "/projects",
 });
 
-const ProjectListItem: React.FC<{ project: ProjectRecord }> = ({ project }) => {
-  const context = project.contexts[0];
-
+const ProjectListItem: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <li className="py-7 first:pt-0 last:pb-0">
       <article>
@@ -31,11 +29,7 @@ const ProjectListItem: React.FC<{ project: ProjectRecord }> = ({ project }) => {
             {project.name}
           </Link>
         </h2>
-        {(project.tagline || context) && (
-          <p className="mt-1 text-13 text-site-muted">
-            {[project.tagline, context?.company].filter(Boolean).join(" · ")}
-          </p>
-        )}
+        <p className="mt-1 text-13 text-site-muted">{project.company}</p>
         <p className="mt-2 max-w-2xl text-15 leading-6">
           {project.description}
         </p>
@@ -63,11 +57,7 @@ const ProjectListItem: React.FC<{ project: ProjectRecord }> = ({ project }) => {
 
 export default async function ProjectsPage() {
   const content = await loadContent();
-  const projects = getProjectRecords(content);
-  const work = projects.filter((project) => project.contexts.length > 0);
-  const independent = projects.filter(
-    (project) => project.contexts.length === 0
-  );
+  const projects = content.projects;
 
   return (
     <>
@@ -76,24 +66,12 @@ export default async function ProjectsPage() {
         lede="Case studies for the products and tools I've built — what each one does, the stack behind it, and where to find the code or the live site."
       />
 
-      {work.length > 0 && (
-        <Section title="Built at work">
-          <ul className="divide-y divide-site-rule border-b border-site-rule">
-            {work.map((project) => (
-              <ProjectListItem key={project.id} project={project} />
-            ))}
-          </ul>
-        </Section>
-      )}
-
-      {independent.length > 0 && (
-        <Section title="Independent projects">
-          <ul className="divide-y divide-site-rule border-b border-site-rule">
-            {independent.map((project) => (
-              <ProjectListItem key={project.id} project={project} />
-            ))}
-          </ul>
-        </Section>
+      {projects.length > 0 && (
+        <ul className="mt-12 divide-y divide-site-rule border-b border-site-rule">
+          {projects.map((project) => (
+            <ProjectListItem key={project.id} project={project} />
+          ))}
+        </ul>
       )}
 
       {content.contributions.length > 0 && (

@@ -1,85 +1,56 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { motion, MotionConfig, useReducedMotion } from "framer-motion";
 import type { Profile } from "../../lib/content/schema";
-
-const navigation = [
-  { href: "/", label: "Index" },
-  { href: "/projects", label: "Work" },
-  { href: "/experience", label: "Archive" },
-  { href: "/contact", label: "Contact" },
-];
+import MobilePortfolioNav from "./mobile-portfolio-nav";
 
 export default function MobilePortfolio({ profile }: { profile: Profile }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   return (
-    <div className="phone-portfolio">
-      <header className="phone-portfolio-header">
-        <Link href="/" className="phone-portfolio-name">
-          {profile.name}
-        </Link>
-        <button
-          type="button"
-          className="phone-menu-toggle"
-          aria-expanded={menuOpen}
-          aria-controls="phone-portfolio-menu"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          {menuOpen ? "Close" : "Menu"}
-        </button>
-      </header>
-
-      {menuOpen ? (
-        <main
-          className="phone-menu-view"
-          id="phone-portfolio-menu"
-          aria-label="Portfolio menu"
-        >
-          <section className="phone-profile">
-            <p className="phone-profile-name">{profile.name}</p>
-            <h1>{profile.role}</h1>
-            <p className="phone-profile-summary">{profile.summary}</p>
-          </section>
-
-          <nav className="phone-portfolio-nav" aria-label="Portfolio sections">
-            {navigation.map(({ href, label }, index) => (
-              <Link
-                key={label}
-                href={href}
-                className={label === "Index" ? "is-current" : undefined}
-                onClick={() => setMenuOpen(false)}
-              >
-                <span className="phone-nav-number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span>{label}</span>
-                <span className="phone-nav-arrow" aria-hidden="true">
-                  ↗
-                </span>
-              </Link>
-            ))}
-          </nav>
-        </main>
-      ) : (
-        <main className="phone-index" aria-label="Portfolio home">
-          <div className="phone-portrait-wrap">
-            <div className="phone-portrait">
+    <MotionConfig reducedMotion="user">
+      <div className="phone-portfolio">
+        <MobilePortfolioNav profile={profile} />
+        <main className="phone-home-main">
+          <section
+            className="phone-home-hero"
+            aria-labelledby="phone-home-title"
+          >
+            <motion.div
+              className="phone-home-portrait"
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.65,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
               <Image
                 src="/photo_2026-11-04_13-32-43.jpg"
                 alt={profile.name}
                 fill
                 priority
-                sizes="(max-width: 767px) 48vw, 190px"
-                className="phone-portrait-image"
+                sizes="(max-width: 767px) 52vw, 210px"
+                className="phone-home-image"
               />
-            </div>
-          </div>
-          <h1 className="phone-display-name">{profile.name}</h1>
+            </motion.div>
+            <motion.h1
+              id="phone-home-title"
+              className="phone-display-name"
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.45,
+                delay: reduceMotion ? 0 : 0.1,
+                ease: "easeOut",
+              }}
+            >
+              {profile.name}
+            </motion.h1>
+          </section>
         </main>
-      )}
-    </div>
+      </div>
+    </MotionConfig>
   );
 }

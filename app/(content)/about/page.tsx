@@ -5,7 +5,6 @@ import {
   PageHeader,
   Section,
 } from "../../components/site/ui";
-import { projectPath, getProjectRecords } from "../../lib/content/archive";
 import { formatYearMonthRange } from "../../lib/content/dates";
 import { pageMetadata } from "../../lib/content/seo";
 import { loadContent } from "../../lib/content/server";
@@ -13,7 +12,7 @@ import { loadContent } from "../../lib/content/server";
 export const metadata = pageMetadata({
   title: "About",
   description:
-    "Background, focus areas, and technical skills of Mohammed Javad E, a software developer in Kochi, India.",
+    "Background, focus areas, and technical skills of Mohammed Javad, a software developer in Kochi, India.",
   path: "/about",
 });
 
@@ -71,26 +70,6 @@ export default async function AboutPage() {
             </div>
           ))}
         </div>
-      </Section>
-
-      <Section title="Selected projects">
-        <ul className="divide-y divide-site-rule border-y border-site-rule">
-          {getProjectRecords(content)
-            .slice(0, 4)
-            .map((project) => (
-              <li key={project.id} className="py-4">
-                <Link
-                  href={projectPath(project.id)}
-                  className="text-15 font-medium text-site-accent hover:underline"
-                >
-                  {project.name}
-                </Link>
-                <p className="mt-1 max-w-2xl text-15 leading-6 text-site-muted">
-                  {project.description}
-                </p>
-              </li>
-            ))}
-        </ul>
       </Section>
 
       <Section title="Links">

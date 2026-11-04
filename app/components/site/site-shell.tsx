@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import MobilePortfolioNav from "../mobile/mobile-portfolio-nav";
 import type { Profile } from "../../lib/content/schema";
 
 const navigation = [
@@ -28,7 +29,9 @@ const SiteShell: React.FC<{
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-10 border-b border-site-rule bg-site-header backdrop-blur-xl">
+      <MobilePortfolioNav profile={profile} />
+
+      <header className="site-desktop-header sticky top-0 z-10 border-b border-site-rule bg-site-header backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl flex-col gap-2 px-5 py-3 md:h-14 md:flex-row md:items-center md:justify-between md:gap-6 md:px-8 md:py-0">
           <Link
             href="/"
@@ -60,7 +63,7 @@ const SiteShell: React.FC<{
         {children}
       </main>
 
-      <footer className="border-t border-site-rule">
+      <footer className="site-desktop-footer border-t border-site-rule">
         <div className="mx-auto flex max-w-3xl flex-col gap-4 px-5 py-10 text-13 text-site-muted md:flex-row md:items-center md:justify-between md:px-8">
           <p>
             {profile.name} — {profile.role}
@@ -98,6 +101,14 @@ const SiteShell: React.FC<{
             </li>
           </ul>
         </div>
+      </footer>
+
+      <footer className="site-mobile-footer">
+        <p>
+          {profile.name} — {profile.role}
+        </p>
+        <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        <Link href="/">Back to home</Link>
       </footer>
     </div>
   );

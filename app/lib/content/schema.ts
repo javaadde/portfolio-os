@@ -6,6 +6,16 @@ const yearMonth = z
 
 const url = z.string().url();
 
+/** Extra depth for the case-study pages. Every field is optional and only
+ * rendered when the content actually supports it. */
+const caseStudySchema = z.object({
+  problem: z.string().optional(),
+  role: z.string().optional(),
+  architecture: z.string().optional(),
+  challenges: z.array(z.string()).default([]),
+  outcomes: z.array(z.string()).default([]),
+});
+
 const experienceProjectSchema = z.union([
   z.string(),
   z.object({
@@ -16,6 +26,8 @@ const experienceProjectSchema = z.union([
     description: z.string(),
     tags: z.array(z.string()).default([]),
     link: url.optional(),
+    github: url.optional(),
+    caseStudy: caseStudySchema.optional(),
   }),
 ]);
 
@@ -67,6 +79,8 @@ export const portfolioSchema = z.object({
         description: z.string(),
         tags: z.array(z.string()).default([]),
         link: url.optional(),
+        github: url.optional(),
+        caseStudy: caseStudySchema.optional(),
       })
     )
     .default([]),
@@ -132,6 +146,7 @@ export type Profile = PortfolioContent["profile"];
 export type Experience = PortfolioContent["experiences"][number];
 export type ExperienceProject = z.infer<typeof experienceProjectSchema>;
 export type Project = PortfolioContent["projects"][number];
+export type CaseStudy = z.infer<typeof caseStudySchema>;
 export type Award = PortfolioContent["awards"][number];
 export type Wallpaper = PortfolioContent["system"]["wallpapers"][number];
 

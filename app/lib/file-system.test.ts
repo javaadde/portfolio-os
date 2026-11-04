@@ -24,26 +24,28 @@ describe("file system", () => {
   });
 
   it("titles the home folder with the username", () => {
-    expect(getLocationTitle("home", "jane")).toBe("jane");
-    expect(getLocationTitle("tag:Mobile", "jane")).toBe("Mobile");
+    expect(getLocationTitle("home", "testuser")).toBe("testuser");
+    expect(getLocationTitle("tag:Mobile", "testuser")).toBe("Mobile");
   });
 
   it("lists projects and filters them by tag", () => {
-    expect(ids(listLocation("projects", entries, "jane", fileState()))).toEqual(
-      ["rocket", "secret"]
-    );
     expect(
-      ids(listLocation("tag:Golang", entries, "jane", fileState()))
+      ids(listLocation("projects", entries, "testuser", fileState()))
+    ).toEqual(["rocket", "secret"]);
+    expect(
+      ids(listLocation("tag:Golang", entries, "testuser", fileState()))
     ).toEqual(["secret"]);
   });
 
   it("moves trashed files out of their folder and into the Trash", () => {
     const state = fileState(["rocket", "cv"]);
-    expect(ids(listLocation("projects", entries, "jane", state))).toEqual([
+    expect(ids(listLocation("projects", entries, "testuser", state))).toEqual([
       "secret",
     ]);
-    expect(ids(listLocation("documents", entries, "jane", state))).toEqual([]);
-    expect(ids(listLocation("trash", entries, "jane", state))).toEqual([
+    expect(ids(listLocation("documents", entries, "testuser", state))).toEqual(
+      []
+    );
+    expect(ids(listLocation("trash", entries, "testuser", state))).toEqual([
       "cv",
       "rocket",
     ]);

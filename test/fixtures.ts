@@ -4,17 +4,18 @@ export const createContent = (
   overrides: Partial<PortfolioContent> = {}
 ): PortfolioContent =>
   parsePortfolio({
-    site: { title: "Jane", description: "Portfolio" },
+    site: { title: "Test Portfolio", description: "Fixture content" },
     profile: {
-      name: "Jane Appleseed",
-      initials: "JA",
-      username: "jane",
+      // Deliberately fake, so fixture data can never be mistaken for the real owner.
+      name: "Test Person",
+      initials: "TP",
+      username: "testuser",
       role: "Engineer",
       summary: "Builds things.",
       careerStart: "2020-01",
-      email: "jane@example.com",
+      email: "test@example.com",
       cv: "/cv.pdf",
-      links: { github: "https://github.com/jane" },
+      links: { github: "https://github.com/testuser" },
     },
     experiences: [
       {

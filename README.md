@@ -35,6 +35,7 @@ The shape of the file is defined by `PortfolioContent` in [`app/lib/content/type
 | `system.default*`         | First-visit appearance and wallpaper                                        |
 | `system.hostname`         | Terminal prompt                                                             |
 | `system.browser.homepage` | Safari's start page (falls back to `profile.links.website`)                 |
+| `projects[].caseStudy`    | Project pages only — problem, role, architecture, challenges, outcomes      |
 
 Dates use `YYYY-MM` (leave `end` out for a current role).
 
@@ -58,6 +59,35 @@ NEXT_PUBLIC_CONTENT_API_URL=https://your-api.example.com/portfolio
 
 (Allow CORS from your site's origin.) For anything more custom — auth headers, a CMS SDK, GraphQL — implement `ContentSource` yourself and export it as `contentSource`.
 
+## Reading pages
+
+The desktop is one surface; the same portfolio is also published as plain,
+server-rendered HTML so search engines, recruiters and AI assistants can read it
+without running JavaScript.
+
+```text
+/                 Interactive desktop (client-rendered, unchanged)
+/about            Background, focus, skills, links
+/projects         Index of every project, plus open-source contributions
+/projects/[id]    One case study per project
+/experience       Roles and the products shipped in them
+/contact          Email, GitHub, LinkedIn, CV
+/sitemap.xml      Generated from the same content
+/robots.txt
+/llms.txt         Generated from the same content
+```
+
+- `app/lib/content/archive.ts` merges `experiences[].projects` and `projects`
+  into one record per project (deduped by `id`, work projects first), so every
+  project has exactly one URL. The sitemap, `llms.txt` and the pages all read it.
+- `caseStudy` is optional. Its sections only render when you fill them in, and
+  they live on the project page — the desktop apps keep using `description`.
+- Each route sets its own canonical URL and Open Graph tags via
+  `pageMetadata()` in `app/lib/content/seo.ts`; the homepage uses the defaults
+  in `app/layout.tsx`. `SITE_URL` comes from `profile.links.website`.
+- Structured data is `Person` on the homepage and `SoftwareApplication` /
+  `SoftwareSourceCode` on each project page — only facts already on the page.
+
 ## Development
 
 ```bash
@@ -77,7 +107,11 @@ Mobile has an iOS-style home screen with a local clock, seven apps, and a dock; 
 
 ```
 app/
+├── (content)/        Server-rendered reading pages (/about, /projects, …)
 ├── api/portfolio/     Static API route serving data/portfolio.json
+├── llms.txt/          /llms.txt generated from the content
+├── sitemap.ts         Sitemap generated from the content
+├── robots.ts          robots.txt
 ├── components/
 │   ├── apps/          One folder per app (Finder, Notes, Terminal, …), lazy-loaded
 │   ├── desktop/       Desktop icons and marquee selection
@@ -88,7 +122,8 @@ app/
 ├── context/           React state: content, settings, windows, files, overlays, notifications
 ├── hooks/             Reusable hooks
 └── lib/
-    ├── content/       Zod schema (the content contract) and content sources
+    ├── content/       Zod schema, content sources, project archive, SEO
+    │                  builders and date formatting
     ├── file-system.ts Virtual file system shared by Desktop, Finder and Quick Look
     ├── apps.tsx       App registry
     └── design-tokens.ts  Type scale and layer order used by Tailwind

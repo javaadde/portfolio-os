@@ -41,6 +41,51 @@ textarea,
   color-scheme: dark;
 }
 
+/* Server-rendered reading pages (app/(content)). They live outside the desktop
+   shell, so they bring their own scroll container, text selection and palette. */
+.site-shell {
+  --site-bg: #f5f5f7;
+  --site-header: rgba(245, 245, 247, 0.82);
+  --site-surface: #ffffff;
+  --site-fg: #1d1d1f;
+  --site-muted: #6e6e73;
+  --site-rule: rgba(0, 0, 0, 0.09);
+  --site-accent: #0066cc;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  background: var(--site-bg);
+  color: var(--site-fg);
+  cursor: auto;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+@media (prefers-color-scheme: dark) {
+  .site-shell {
+    --site-bg: #0b0b0d;
+    --site-header: rgba(11, 11, 13, 0.82);
+    --site-surface: #161618;
+    --site-fg: #f5f5f7;
+    --site-muted: #a1a1a6;
+    --site-rule: rgba(255, 255, 255, 0.13);
+    --site-accent: #4c9aff;
+  }
+}
+
+.site-shell a {
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+
+.site-shell a:focus-visible,
+.site-shell button:focus-visible {
+  outline: 2px solid var(--site-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

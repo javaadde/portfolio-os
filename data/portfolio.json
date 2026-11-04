@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "javaadde",
-    "description": "Mohammed Javad E — Software Developer"
+    "title": "Mohammed Javad E — Software Developer",
+    "description": "Software developer in Kochi, India. Projects, engineering case studies, and work experience — from database schema to polished UI."
   },
   "profile": {
     "name": "Mohammed Javad E",
@@ -44,13 +44,24 @@
           "type": "Shipped Product",
           "role": "Full-Stack Development",
           "description": "Financial paperwork, tracked — ledger, invoices, expense tracking, and PDF storage for early-stage startups and small companies without an accountant. Built with React 19, TanStack Router/Query, Hono, Drizzle ORM, and PostgreSQL.",
-          "tags": [
-            "Web",
-            "React",
-            "Hono",
-            "PostgreSQL"
-          ],
-          "link": "https://papr.work/"
+          "tags": ["Web", "React", "Hono", "PostgreSQL"],
+          "link": "https://papr.work/",
+          "caseStudy": {
+            "problem": "Small companies without an accountant still have to track a ledger, invoices, expenses, salaries, payments and the PDFs behind them. Papr.work is that product: one place for financial paperwork, spanning a web app, a mobile app, an admin portal and employee self-service.",
+            "role": "Primary engineer on v1 — database design, system architecture, the Hono API, the React 19 web app, the React Native/Expo mobile app, and the admin and employee portals. Delivered roughly 90% of v1 as the sole engineer, merging 24+ pull requests in about a month, all through senior code review.",
+            "architecture": "A Hono API over PostgreSQL through Drizzle ORM, with Zod request validation and Argon2 password hashing. The React 19 web app and the React Native/Expo mobile app share TypeScript contracts and validation. A Model Context Protocol server with OAuth authorization exposes financial documents, payments, ledger queries and employee self-service to AI clients.",
+            "challenges": [
+              "Closed a security issue by moving document previews into a sandboxed iframe.",
+              "Built a reusable terms-template system for invoices and quotations, plus custom document templates.",
+              "Implemented a forgot-password flow alongside Argon2-based authentication.",
+              "Kept the web and mobile clients on the same TypeScript contracts and validation, so invoices, expenses, salaries and payments render identically on both."
+            ],
+            "outcomes": [
+              "Papr.work v1 is live at papr.work.",
+              "One backend serves the web app, mobile app, admin portal and employee self-service portals for payslips, payments, profiles and leave requests.",
+              "AI clients can work with Papr.work data through the MCP server, authorised with OAuth."
+            ]
+          }
         },
         {
           "id": "smileos",
@@ -58,13 +69,16 @@
           "type": "Contributed Product",
           "role": "Frontend & Feature Engineering",
           "description": "Complete growth operating system for dental clinics used by 5,000+ practices across Australia — automated patient communications, AI-driven enquiry actions, marketing pipelines, and practice analytics.",
-          "tags": [
-            "Web",
-            "Next.js",
-            "Hono",
-            "PostgreSQL"
-          ],
-          "link": "https://www.smileos.online/"
+          "tags": ["Web", "Next.js", "Hono", "PostgreSQL"],
+          "link": "https://www.smileos.online/",
+          "caseStudy": {
+            "role": "Full-stack feature work on a Next.js, Hono and Drizzle/PostgreSQL stack, shipped through senior code review.",
+            "architecture": "Next.js front end, Hono API, and Drizzle ORM over PostgreSQL.",
+            "outcomes": [
+              "Automated patient communications, AI-driven enquiry actions, marketing pipelines and practice analytics in one platform.",
+              "Used by dental practices across Australia."
+            ]
+          }
         },
         {
           "id": "remain-fit",
@@ -72,10 +86,7 @@
           "type": "Contributed Product",
           "role": "Frontend & Web Engineering",
           "description": "Small, single-purpose tools for the hard part of fitness — fasting, weight, streaks, and hydration with one account and a quiet design language.",
-          "tags": [
-            "Web",
-            "Next.js"
-          ],
+          "tags": ["Web", "Next.js"],
           "link": "https://remain.fit/"
         }
       ]
@@ -94,14 +105,19 @@
           "type": "Shipped Product",
           "role": "Full-Stack Development",
           "description": "Built a full-stack social media planning and analytics dashboard with AI caption suggestions, analytics visualizations, and cloud deployment.",
-          "tags": [
-            "Web",
-            "Next.js",
-            "Node.js",
-            "MongoDB"
-          ],
+          "tags": ["Web", "Next.js", "Node.js", "MongoDB"],
           "link": "https://hayon.site",
-          "github": "https://github.com/javaadde/hayon"
+          "github": "https://github.com/javaadde/hayon",
+          "caseStudy": {
+            "role": "Built the dashboard end to end: a Zod-validated post scheduler, analytics visualisations, and Google Gemini AI caption suggestions, deployed on AWS EC2 with S3 for media storage.",
+            "architecture": "Next.js with shadcn/ui on the client, a Node.js/Express API, MongoDB for storage, RabbitMQ for background work, and AWS EC2/S3 for hosting and media.",
+            "outcomes": [
+              "Social media post scheduling, validated with Zod.",
+              "Analytics dashboards built with Recharts.",
+              "AI caption suggestions through Google Gemini.",
+              "Accessible, responsive Next.js and shadcn/ui interface."
+            ]
+          }
         }
       ]
     }
@@ -112,12 +128,7 @@
       "name": "Haruru",
       "company": "Rust Desktop App · Disk Usage & Cleanup",
       "description": "Explore disk usage through interactive sunburst charts and treemaps. Built in Rust with egui, Haruru combines duplicate-file detection, remote SSH scanning, and an AI storage advisor in a cross-platform desktop app.",
-      "tags": [
-        "Desktop",
-        "Rust",
-        "egui",
-        "Data Visualization"
-      ],
+      "tags": ["Desktop", "Rust", "egui", "Data Visualization"],
       "link": "https://github.com/javaadde/haruru"
     },
     {
@@ -125,12 +136,7 @@
       "name": "Evolf",
       "company": "Hardware Tooling · Linux Mouse Controls",
       "description": "Control Evofox Phantom mouse lighting from Linux with a React-powered terminal interface and a Python HID backend. Includes automatic device detection and scriptable CLI commands for hardware whose configuration utility is Windows-only.",
-      "tags": [
-        "CLI",
-        "React",
-        "Python",
-        "Hardware"
-      ],
+      "tags": ["CLI", "React", "Python", "Hardware"],
       "link": "https://github.com/javaadde/evolf"
     },
     {
@@ -138,12 +144,7 @@
       "name": "Zaiko",
       "company": "Mobile App · Retail Inventory & Sales",
       "description": "Manage a mobile shop from stock intake to sale: track individual devices by IMEI, capture product photos, verify sales, and review inventory and profit insights. Built with React Native, Expo, and Firebase, with company workspaces and archived-stock recovery.",
-      "tags": [
-        "Mobile",
-        "React Native",
-        "Expo",
-        "Firebase"
-      ],
+      "tags": ["Mobile", "React Native", "Expo", "Firebase"],
       "link": "https://github.com/javaadde/zaiko"
     },
     {
@@ -151,12 +152,7 @@
       "name": "Hayon",
       "company": "Full-Stack Social Media Dashboard",
       "description": "All-in-one social media planning and analytics dashboard built with Next.js (App Router), shadcn/ui, Recharts, Google Gemini AI caption suggestions, RabbitMQ, and AWS (EC2/S3).",
-      "tags": [
-        "Web",
-        "Next.js",
-        "Node.js",
-        "MongoDB"
-      ],
+      "tags": ["Web", "Next.js", "Node.js", "MongoDB"],
       "link": "https://hayon.site",
       "github": "https://github.com/javaadde/hayon"
     }
@@ -169,11 +165,7 @@
       "number": 1833,
       "status": "Merged",
       "description": "Expanded CI coverage for cross-compilation jobs that cannot run target binaries. These jobs now compile all Cargo test targets instead of only the default test set, catching more target-specific build failures during CI.",
-      "tags": [
-        "Rust",
-        "CI",
-        "Cross-compilation"
-      ],
+      "tags": ["Rust", "CI", "Cross-compilation"],
       "link": "https://github.com/rust-lang/cc-rs/pull/1833"
     }
   ],
@@ -214,13 +206,7 @@
       "RabbitMQ",
       "System Design"
     ],
-    "Databases & ORM": [
-      "PostgreSQL",
-      "Drizzle ORM",
-      "MongoDB",
-      "Redis",
-      "SQL"
-    ],
+    "Databases & ORM": ["PostgreSQL", "Drizzle ORM", "MongoDB", "Redis", "SQL"],
     "DevOps & Mobile": [
       "AWS (S3/EC2)",
       "Docker",

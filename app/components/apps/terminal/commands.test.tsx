@@ -18,7 +18,7 @@ const textOf = (output: React.ReactNode) =>
 describe("terminal commands", () => {
   it("introduces the portfolio owner", () => {
     expect(runCommand("whoami", createContext())).toBe(
-      "Jane Appleseed - Engineer"
+      "Test Person - Engineer"
     );
   });
 
@@ -41,7 +41,7 @@ describe("terminal commands", () => {
   it("opens links through the browser policy", () => {
     const context = createContext();
     expect(runCommand("open github", context)).toBe("Opening GitHub...");
-    expect(context.openUrl).toHaveBeenCalledWith("https://github.com/jane");
+    expect(context.openUrl).toHaveBeenCalledWith("https://github.com/testuser");
   });
 
   it("lists experience from content", () => {

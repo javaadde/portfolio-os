@@ -19,6 +19,17 @@ const config: Config = {
         ],
         mono: ["var(--font-sf-mono)", "ui-monospace", "Menlo", "monospace"],
       },
+      colors: {
+        site: {
+          bg: "var(--site-bg)",
+          header: "var(--site-header)",
+          surface: "var(--site-surface)",
+          fg: "var(--site-fg)",
+          muted: "var(--site-muted)",
+          rule: "var(--site-rule)",
+          accent: "var(--site-accent)",
+        },
+      },
       fontSize: fontSizes,
       zIndex: layers,
     },

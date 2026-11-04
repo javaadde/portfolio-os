@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import MobileHome from "./components/mobile/mobile-home";
 import Providers from "./providers";
 import Desktop from "./components/desktop/desktop";
@@ -10,31 +11,52 @@ import Notifications from "./components/system/notifications";
 import BrightnessOverlay from "./components/system/brightness-overlay";
 import PowerScreen from "./components/system/power-screen";
 import Launcher from "./components/launcher/launcher";
+import JsonLd from "./components/site/json-ld";
+import { personJsonLd } from "./lib/content/seo";
+import { loadContent } from "./lib/content/server";
 
-export default function Home() {
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+export default async function Home() {
+  const content = await loadContent();
+
   return (
-    <Providers>
-      <main className="desktop-shell relative h-dvh w-screen overflow-hidden">
-        <Wallpaper />
-        <div className="desktop-only">
-          <Desktop />
-        </div>
-        <MobileHome />
-        <WindowManager />
-        <div className="desktop-only absolute bottom-2 z-dock w-full flex justify-center pointer-events-none [&>*]:pointer-events-auto">
-          <Dock />
-        </div>
-        <div className="desktop-only">
-          <Launcher />
-        </div>
-        <div className="desktop-only absolute top-0 inset-x-0 z-menubar pointer-events-none [&>*]:pointer-events-auto">
-          <Menubar />
-        </div>
-        <Spotlight />
-        <Notifications />
-        <BrightnessOverlay />
-        <PowerScreen />
-      </main>
-    </Providers>
+    <>
+      {/* Outside the provider, so the structured data and the link to the text
+          version are part of the static HTML instead of the client bundle. */}
+      <JsonLd data={personJsonLd(content)} />
+      <a
+        href="/projects"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-power focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-13 focus:text-black focus:shadow-lg"
+      >
+        Skip to the text version of this portfolio
+      </a>
+
+      <Providers>
+        <main className="desktop-shell relative h-dvh w-screen overflow-hidden">
+          <Wallpaper />
+          <div className="desktop-only">
+            <Desktop />
+          </div>
+          <MobileHome />
+          <WindowManager />
+          <div className="desktop-only absolute bottom-2 z-dock w-full flex justify-center pointer-events-none [&>*]:pointer-events-auto">
+            <Dock />
+          </div>
+          <div className="desktop-only">
+            <Launcher />
+          </div>
+          <div className="desktop-only absolute top-0 inset-x-0 z-menubar pointer-events-none [&>*]:pointer-events-auto">
+            <Menubar />
+          </div>
+          <Spotlight />
+          <Notifications />
+          <BrightnessOverlay />
+          <PowerScreen />
+        </main>
+      </Providers>
+    </>
   );
 }
